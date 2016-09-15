@@ -1,14 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .wrap
+    .title.fl
+      p.main Your Ad Cloud
+      p.sub 优效 · 智选
 
-  form.login(method="post" action="/action/login")
-    input(id="username" name="username")
-    br
-    input(id="password" name="password" type="password")
-    br
-    input(id="loginBtn" type="submit" value="submit")
+    .login-form.fl
+      form(method="post" action="/action/login")
+        input(id="username" name="username")
+        br
+        input(id="password" name="password" type="password")
+        br
+        input.btn(id="loginBtn" type="submit" value="登录")
+
+  .bgWrap
   
   script(src = '/javascripts/index.js')

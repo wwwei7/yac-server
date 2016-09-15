@@ -1,8 +1,52 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+*{
+  outline: none;
+  text-decoration: none;
 }
 
-a {
-  color: #00B7FF;
+.fl{
+  float: left;
+}
+
+.wrap{
+  max-width: 1024px;
+  margin: 200px auto;
+  overflow: hidden
+}
+.title{
+  margin-right: 200px;
+  font-size: 50px;
+  color: #35b0b7;
+  font-family: fantasy,microsoft yahei;
+}
+.title .sub{
+  font-size: 34px;
+  text-indent: 110px;
+}
+.login-form input.btn{
+  width: 100px;
+  padding: 0;
+  color: #fff;
+  background: #78a560;
+}
+.login-form{
+  padding: 30px;
+  background: linear-gradient(to bottom right, #fff , #eee);
+}
+.login-form input{
+  width: 270px;
+  margin: 20px;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #eee;
+  font-size: 17px;
+  padding-left: 14px;
+}
+.bgWrap{
+    position: fixed;
+    top: 0;
+    left: 0;   
+    width: 100%;
+    height: 100%;    
+    background: linear-gradient(to bottom right, #fff , #7aedff); /* 标准的语法 */
+    z-index: -1;
 }
