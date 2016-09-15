@@ -3,3 +3,12 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  form.login(method="post" action="/action/login")
+    input(id="username" name="username")
+    br
+    input(id="password" name="password" type="password")
+    br
+    input(id="loginBtn" type="submit" value="submit")
+  
+  script(src = '/javascripts/index.js')
