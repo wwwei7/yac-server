@@ -8,7 +8,6 @@
 ### 安装模块依赖
 
 ```
-cd yac-application
 npm install
 ```
 
