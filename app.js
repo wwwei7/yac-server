@@ -22,13 +22,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// static rooter
 app.use(express.static(path.join(__dirname, 'asserts')));
+app.use('/app',express.static(path.join(__dirname, 'client')));
+
 //session init
 app.use(session({
-    secret: 'recommand 128 bytes random string',
-    cookie: { maxAge: 60 * 1000 },
-    resave: false,
-    saveUninitialized: true
+    secret: 'yac secret hello',
+    cookie: { maxAge: 60 * 60 * 1000 },
+    resave: true,
+    saveUninitialized: false
 }));
 // app.use(function(req, res, next){
 //     res.locals.user = req.session.user;
@@ -38,7 +42,6 @@ app.use(session({
 app.use('/', routes);
 app.use('/action', actions);
 app.use('/i',apiRoutes);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

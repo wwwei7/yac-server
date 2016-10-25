@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
+var cookieParser = require('cookie-parser');
+
 
 router.get('/user/:id', function(req, res, next) {
     var id = req.params.id;
-    res.send('user id : ' + id);
+    var sessionId = cookieParser.signedCookie(req.cookies.SESSIONID, 'yac secret hello');        
+
+    res.header("Content-Type", "application/json;charset=utf-8");
+
+    return res.send(JSON.stringify({'user':id}));
 });
 
 router.get('/product/:id', function(req, res, next) {
