@@ -4,16 +4,16 @@ connection.connect(function(err){
     if(err) throw err
     console.log('DB connected')
 
-    var name = 'testname' + parseInt(Math.random()*100);
-    connection.query(
-        'INSERT INTO user_base (name, psw, company, role) VALUES (?,?,?,?)',
-        [name,'haha','disney','agency'],
-        function(err, result){
-            if(err) throw err
-            console.log('data insert success')
-            console.log(result)
-        }
-    )
+    // var name = 'testname' + parseInt(Math.random()*100);
+    // connection.query(
+    //     'INSERT INTO user_base (name, psw, company, role) VALUES (?,?,?,?)',
+    //     [name,'haha','disney','agency'],
+    //     function(err, result){
+    //         if(err) throw err
+    //         console.log('data insert success')
+    //         console.log(result)
+    //     }
+    // )
 });
 
 var user = {};
@@ -28,6 +28,7 @@ user.find = function(name,psw,done){
                 user.name = name;
                 user.role = row.role;
                 user.company = row.company;
+                user.uid = row.id;
                 done(user);
                 return;
             }

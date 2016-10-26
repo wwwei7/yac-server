@@ -3,8 +3,9 @@ var check = function(req,res,next){
 
       // return res.send({
       //   user: {
-      //     name: 'vincent',
-      //     role: 'agency'  
+      //     name: 'testname7',
+      //     role: 'agency',
+      //     uid: '100002'  
       //   }
       // })
 
