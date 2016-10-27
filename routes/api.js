@@ -25,13 +25,21 @@ router.post('/advertiser', function(req, res, next){
 })
 router.get('/advertiser/:id', function(req, res, next){
     var id = req.params.id;
-    advertiser.findByUid(id, function(data){
+    advertiser.findById(id,function(data){
         return res.send(data)
     })
 })
-router.get('/advertiser/name/:name', function(req, res, next){
+router.get('/advertiser/user/:uid', function(req, res, next){
+    var uid = req.params.uid;
+    advertiser.findByUid(uid, function(data){
+        return res.send(data)
+    })
+})
+
+router.get('/advertiser/:uid/name/:name', function(req, res, next){
+    var uid = req.params.uid; 
     var name = req.params.name;
-    advertiser.findByName(name, function(data){
+    advertiser.findInName(uid, name, function(data){
         return res.send(data)
     })
 })

@@ -8,6 +8,7 @@ block content
 
     .login-form.fl
       form(method="post" action="/action/login")
+        p.err= err
         input(id="username" name="username" placeholder="用户名")
         br
         input(id="password" name="password" type="password" placeholder="密码")

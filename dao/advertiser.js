@@ -1,14 +1,38 @@
 var connection = require('./connection.js');
 var advertiser = {};
 
-advertiser.findByUid = function(uid,next){
-    connection.query('SELECT * FROM advertiser where user_id='+uid, 
+advertiser.findById = function(id, next){
+    connection.query('SELECT * FROM advertiser WHERE id=' + id, 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
                 throw err;
             }
             next(rows);
+        }
+    );
+}
+
+advertiser.findByUid = function(uid,next){
+    connection.query('SELECT * FROM advertiser WHERE user_id='+uid, 
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows);
+        }
+    );
+}
+
+advertiser.findInName = function(uid, name , next){
+    var i, row, adlist = [];
+    connection.query('SELECT * FROM advertiser WHERE user_id='+uid+' AND name="'+name+'"', 
+        function(err, rows, fields) {
+            if (err) throw err;
+            if(rows.length>0)
+                return next(rows[0])
+            next({});
         }
     );
 }
@@ -36,17 +60,5 @@ advertiser.insert = function(values, next){
     }
   );
 } 
-
-advertiser.findByName = function(name, next){
-    var i, row, adlist = [];
-    connection.query('SELECT * FROM advertiser where name="'+name+'"', 
-        function(err, rows, fields) {
-            if (err) throw err;
-            if(rows.length>0)
-                return next(rows[0])
-            next({});
-        }
-    );
-}
 
 module.exports = advertiser;

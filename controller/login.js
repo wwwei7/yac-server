@@ -12,7 +12,7 @@ var login = function(req, res, next){
             console.log(req.session.id)
             return res.redirect('/app');
         }else{
-            res.send('wrong')
+              res.render('index', { err: '用户名或密码错误'});
         }
     };
 
