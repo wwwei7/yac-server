@@ -3,6 +3,7 @@ var router = express.Router();
 var cookieParser = require('cookie-parser');
 var advertiser = require('../dao/advertiser');
 var solution = require('../dao/solution');
+var solutionAction = require('../controller/solution');
 
 
 router.get('/user/:id', function(req, res, next) {
@@ -60,6 +61,11 @@ router.get('/solution/:id', function(req, res, next){
     solution.findById(id,function(data){
         return res.send(data)
     })
+})
+router.post('/solution/:id', function(req, res, next){
+    solutionAction.update(req, res, function(data){
+        return res.send(data)
+    });
 })
 router.get('/solution/ad/:aid', function(req, res, next){
     var aid = req.params.aid;
