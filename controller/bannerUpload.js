@@ -49,6 +49,7 @@ var upload = function(req, res, next){
     }
     var file = files.file;
     var filePath = file.path;
+    var sid = fields.sid;    
     var fileName = file.name;
 
 
@@ -56,7 +57,7 @@ var upload = function(req, res, next){
 
     co(function* () {
       client.useBucket('yac-material');
-      var result = yield client.put(fileName, filePath);
+      var result = yield client.put(sid+ '-' +fileName, filePath);
       console.log(result);
 
       //TODO dao
@@ -64,6 +65,8 @@ var upload = function(req, res, next){
       console.log(err);
     });
     res.send({
+      width: dimensions.width,
+      height: dimensions.height,
       url: `http://yac-material.oss-cn-qingdao.aliyuncs.com/${fileName}`
     })
   })
