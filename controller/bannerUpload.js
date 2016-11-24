@@ -51,7 +51,7 @@ var upload = function(req, res, next){
     var file = files.file;
     var filePath = file.path;
     var sid = fields.sid;    
-    var fileName = sid+ '-' + file.name;
+    var fileName = 'banner/'+ sid + '/' + file.name;
 
     var dimensions = sizeOf(filePath);
 
