@@ -17,10 +17,10 @@ var upload = function(req, res, next){
 
   //ali-oss client
   var client = new OSS(config.oss);
+  var extName = '';
 
   form.on('fileBegin', function(name, file) {
     console.log(file)
-    var extName = '';
 
     switch (file.type) {
       case 'image/gif':
@@ -70,6 +70,7 @@ var upload = function(req, res, next){
       fs.unlink(filePath)
 
       return res.send({
+        name: file.name.replace(extName,'').slice(0,-1),
         width: dimensions.width,
         height: dimensions.height,
         url: result.url

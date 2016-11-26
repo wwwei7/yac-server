@@ -3,6 +3,7 @@ var router = express.Router();
 var cookieParser = require('cookie-parser');
 var advertiser = require('../dao/advertiser');
 var solution = require('../dao/solution');
+var bannerAction = require('../controller/banner');
 var solutionAction = require('../controller/solution');
 
 
@@ -73,11 +74,18 @@ router.get('/solution/ad/:aid', function(req, res, next){
         return res.send(data)
     })
 })
-
 router.get('/solution/:aid/name/:name', function(req, res, next){
     var aid = req.params.aid; 
     var name = req.params.name;
     solution.findInName(aid, name, function(data){
+        return res.send(data)
+    })
+})
+
+
+/* banner */
+router.post('/banner/', function(req, res, next){
+    bannerAction.insert(req, res, function(data){
         return res.send(data)
     })
 })
