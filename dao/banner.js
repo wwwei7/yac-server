@@ -20,7 +20,7 @@ banner.insert = function(insertObj,next){
 }
 
 banner.findById = function(id, next){
-    connection.query('SELECT * FROM banner WHERE id=' + id, 
+    connection.query('SELECT * FROM banner WHERE ID=' + id, 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -32,7 +32,8 @@ banner.findById = function(id, next){
 }
 
 banner.findByAid = function(aid,next){
-    connection.query('SELECT * FROM banner WHERE advertiser_id='+ aid, 
+    connection.query(
+        'SELECT banner.ID as bannerid, name, advertiserid, solutionid, memo, link, image, width, height, solution_name FROM banner left join solution on banner.solutionid = solution.id where advertiserid = '+ aid, 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -43,13 +44,13 @@ banner.findByAid = function(aid,next){
     );
 }
 
-banner.findInName = function(aid, name , next){
+banner.findInSize = function(width, height , next){
     var i, row, adlist = [];
-    connection.query('SELECT * FROM banner WHERE advertiser_id='+aid+' AND banner_name="'+name+'"', 
+    connection.query('SELECT * FROM banner WHERE width='+width+' AND height="'+height+'"', 
         function(err, rows, fields) {
             if (err) throw err;
             if(rows.length>0)
-                return next(rows[0])
+                return next(rows[0]);
             next({});
         }
     );

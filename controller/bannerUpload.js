@@ -5,6 +5,7 @@ var sizeOf = require('image-size');
 var co = require("co");
 var OSS = require('ali-oss');
 var config = require('../config');
+var dao = require('../dao/banner');
 
 //当前支持的图片尺寸
 var sizeList = ['336x280', '300x250', '960x90', '728x90', '250x250', '120x240'];
@@ -50,21 +51,22 @@ var upload = function(req, res, next){
     }
     var file = files.file;
     var filePath = file.path;
-    var sid = fields.sid;    
-    var fileName = 'banner/'+ sid + '/' + file.name;
+    var sid = fields.sid;
+    var fileName = config.ossFileLocation + sid + '/' + file.name;
 
     var dimensions = sizeOf(filePath);
 
     var fileSize = dimensions.width + 'x' + dimensions.height;
     if(sizeList.indexOf(fileSize)== -1){
       return res.status(403).send({msg: '当前暂不支持 '+ fileSize+ ' 的图片尺寸！'})
-    }    
+    }
+
+    // 检查是否存在改尺寸图片
+    var updateFlag;  
 
     co(function* () {
       client.useBucket('yac-material');
-      var result = yield client.put(fileName, filePath);;
-
-      //TODO dao
+      var result = yield client.put(fileName, filePath);
 
       //删除本地文件
       fs.unlink(filePath)

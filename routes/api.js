@@ -89,6 +89,11 @@ router.post('/banner/', function(req, res, next){
         return res.send(data)
     })
 })
+router.get('/banner/ad/:aid', function(req, res, next){
+    bannerAction.findByAid(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 //404 api
 router.get('*', function(req, res, next){
