@@ -1,13 +1,13 @@
 
 var check = function(req,res,next){
 
-      return res.send({
-        user: {
-          name: 'testname40',
-          role: 'agency',
-          uid: '100008'  
-        }
-      })
+      // return res.send({
+      //   user: {
+      //     name: 'testname7',
+      //     role: 'agency',
+      //     uid: '100002'  
+      //   }
+      // })
 
   try{
     // var sid = req.cookies['connect.sid'];
