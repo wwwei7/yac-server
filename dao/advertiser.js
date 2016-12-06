@@ -38,18 +38,21 @@ advertiser.findInName = function(uid, name , next){
 }
 
 advertiser.insert = function(values, next){
-  var user_id = values.user_id,
-      name = values.name,
-      contacter = values.contacter,
-      contact_number = values.contact_number,
-      website = values.website,
-      landding_white = values.landing_white;
-  if(!user_id){
+  var insertObj = {
+    user_id: values.user_id,
+    name: values.name,
+    contacter: values.contacter,
+    contact_number: values.contact_number,
+    website: values.website,
+    landing_white: values.landing_white,
+    industry: values.industry
+  }
+  if(!insertObj.user_id){
     next("uid doesn't exist");
   }
   connection.query(
-    'INSERT INTO advertiser (user_id, name, contacter, contact_number, website, landing_white) VALUES (?,?,?,?,?,?)',
-    [user_id, name, contacter, contact_number, website, landding_white],
+    'INSERT INTO advertiser SET ?',
+    insertObj,
     function(err, result){
       if(err) {
           next('insert failed')

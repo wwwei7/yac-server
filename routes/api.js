@@ -5,6 +5,7 @@ var advertiser = require('../dao/advertiser');
 var solution = require('../dao/solution');
 var bannerAction = require('../controller/banner');
 var solutionAction = require('../controller/solution');
+var chargeAction = require('../controller/charge');
 
 
 router.get('/user/:id', function(req, res, next) {
@@ -91,6 +92,18 @@ router.post('/banner/', function(req, res, next){
 })
 router.get('/banner/ad/:aid', function(req, res, next){
     bannerAction.findByAid(req, res, function(data){
+        return res.send(data)
+    })
+})
+
+/* charge */
+router.get('/charge/:aid', function(req, res, next){
+    chargeAction.findByAid(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.post('/charge', function(req, res, next){
+    chargeAction.insert(req, res, function(data){
         return res.send(data)
     })
 })
