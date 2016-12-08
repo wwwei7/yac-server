@@ -6,7 +6,7 @@ var solution = require('../dao/solution');
 var bannerAction = require('../controller/banner');
 var solutionAction = require('../controller/solution');
 var chargeAction = require('../controller/charge');
-
+var reportAction = require('../controller/report');
 
 router.get('/user/:id', function(req, res, next) {
     var id = req.params.id;
@@ -104,6 +104,13 @@ router.get('/charge/:aid', function(req, res, next){
 })
 router.post('/charge', function(req, res, next){
     chargeAction.insert(req, res, function(data){
+        return res.send(data)
+    })
+})
+
+/* report */
+router.get('/report/hour/:aid/:day', function(req, res, next){
+    reportAction.findByHour(req, res, function(data){
         return res.send(data)
     })
 })

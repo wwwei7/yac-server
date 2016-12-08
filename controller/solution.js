@@ -9,10 +9,6 @@ var translate = function(data){
         obj['region_type'] = value.type;
         obj['region_value'] = value.value.join ? value.value.join(',') : value.value;
         break;
-      case 'start_date':
-      case 'end_date':
-        obj[key] = value.split('T')[0];
-        break;
       default:
         obj[key] = value;
     }

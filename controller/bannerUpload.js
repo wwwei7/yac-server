@@ -75,7 +75,7 @@ var upload = function(req, res, next){
         name: file.name.replace(extName,'').slice(0,-1),
         width: dimensions.width,
         height: dimensions.height,
-        url: result.url
+        url: result.url.replace('yac-material.oss-cn-qingdao.aliyuncs.com','mt.youradcloud.com')
       })
     }).catch(function (err) {
       console.log(err);
