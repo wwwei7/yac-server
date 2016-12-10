@@ -109,8 +109,13 @@ router.post('/charge', function(req, res, next){
 })
 
 /* report */
-router.get('/report/hour/:aid/:day', function(req, res, next){
+router.get('/report/:aid/hour/:day', function(req, res, next){
     reportAction.findByHour(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/report/:aid/days/:days', function(req, res, next){
+    reportAction.findByDays(req, res, function(data){
         return res.send(data)
     })
 })
