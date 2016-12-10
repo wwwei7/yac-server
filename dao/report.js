@@ -1,4 +1,8 @@
-var connection = require('./connection.js');
+var mysql = require('mysql');
+var config = require('../config');
+
+var connection = mysql.createConnection(config.reportdb);
+
 var report = {};
 
 report.findByHour =  function(aid, date, next){
