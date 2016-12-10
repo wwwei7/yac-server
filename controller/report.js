@@ -11,7 +11,10 @@ var handler = {
     var resObj = {
       showArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       clickArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      moneyArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      moneyArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      maxShow: 0,
+      maxClick: 0,
+      maxMoney: 0
     };
 
     Dao.findByHour(aid, day, function(data){
@@ -19,7 +22,10 @@ var handler = {
       data.forEach(function(item){
         resObj.showArr[item.hour] = item.show_all;
         resObj.clickArr[item.hour] = item.click_all;
-        resObj.moneyArr[item.hour] = item.money;
+        resObj.moneyArr[item.hour] = item.money_all;
+        resObj.maxShow = resObj.maxShow > item.show_all ? resObj.maxShow : item.show_all;
+        resObj.maxClick = resObj.maxClick > item.click_all ? resObj.maxClick : item.click_all;
+        resObj.maxMoney = resObj.maxMoney > item.money_all ? resObj.maxMoney : item.money_all;        
       }) 
       next(resObj);
     });
@@ -42,13 +48,13 @@ var handler = {
 
       var day_key = '',
           resObj = {};
+
       for(var i=0;i<rangeDays.length;i++){
         day_key = Moment(rangeDays[i]).format('YYYY-MM-DD');
         resObj[day_key] = {
           show: 0,
           click: 0,
-          money: 0
-        };
+          money: 0        };
       }
 
       data.forEach(function(item){
@@ -57,7 +63,8 @@ var handler = {
         day_data.show = item.show_all;
         day_data.click = item.click_all;
         day_data.money = item.money_all;
-      })
+       
+      });
       
       next(resObj);
     });
