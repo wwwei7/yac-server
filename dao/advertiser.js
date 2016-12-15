@@ -52,7 +52,7 @@ advertiser.insert = function(values, next){
   }
   connection.query(
     'INSERT INTO advertiser SET ?',
-    insertObj,
+    values,
     function(err, result){
       if(err) {
           next('insert failed')

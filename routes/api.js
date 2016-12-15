@@ -7,6 +7,8 @@ var bannerAction = require('../controller/banner');
 var solutionAction = require('../controller/solution');
 var chargeAction = require('../controller/charge');
 var reportAction = require('../controller/report');
+var industryDao = require('../dao/industry');
+
 
 router.get('/user/:id', function(req, res, next) {
     var id = req.params.id;
@@ -116,6 +118,13 @@ router.get('/report/:aid/hour/:day', function(req, res, next){
 })
 router.get('/report/:aid/days/:days', function(req, res, next){
     reportAction.findByDays(req, res, function(data){
+        return res.send(data)
+    })
+})
+
+/* util */
+router.get('/industry', function(req, res, next){
+    industryDao.find(function(data){
         return res.send(data)
     })
 })
