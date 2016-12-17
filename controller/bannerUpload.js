@@ -6,6 +6,8 @@ var co = require("co");
 var OSS = require('ali-oss');
 var config = require('../config');
 var dao = require('../dao/banner');
+var randomstring = require("randomstring");
+
 
 //当前支持的图片尺寸
 var sizeList = ['336x280', '300x250', '960x90', '728x90', '250x250', '120x240'];
@@ -52,7 +54,7 @@ var upload = function(req, res, next){
     var file = files.file;
     var filePath = file.path;
     var sid = fields.sid;
-    var fileName = config.ossFileLocation + sid + '/' + file.name;
+    var fileName = config.ossFileLocation + sid + '/' + randomstring.generate(12) + '.' + extName;
 
     var dimensions = sizeOf(filePath);
 
