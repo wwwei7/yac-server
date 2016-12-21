@@ -2,6 +2,7 @@ var mysql = require('mysql');
 var config = require('../config');
 
 var connection = mysql.createConnection(config.reportdb);
+var connectionT = require('./connection.js');
 
 var report = {};
 
@@ -47,5 +48,21 @@ report.findByDay = function(aid, start, end, next){
     );
 }
 
+report.findMedia = function(aid, start, end, next){
+
+  var sql = `select sum(shows) as shows , sum(money) as money, sum(click) as click, media, advertiserid from log_media
+             where advertiserid=${aid} AND 
+             \`date\` between '${start}' and '${end}' group by media ORDER BY shows desc limit 10`;
+
+    connectionT.query(sql, 
+      function(err, rows, fields) {
+        if (err) {
+            next(err);                
+            throw err;
+        }
+        next(rows);
+      }
+    );
+}
 
 module.exports = report;

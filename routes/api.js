@@ -121,6 +121,11 @@ router.get('/report/:aid/days/:days', function(req, res, next){
         return res.send(data)
     })
 })
+router.get('/report/:aid/media/:days', function(req, res, next){
+    reportAction.findMedia(req, res, function(data){
+        return res.send(data);
+    })
+})
 
 /* util */
 router.get('/industry', function(req, res, next){

@@ -68,6 +68,34 @@ var handler = {
       
       next(resObj);
     });
+  },
+
+
+  findMedia: function(req, res, next){
+    var aid = req.params.aid;
+    var days = req.params.days.split('t');
+    var start = days[0],
+        end = days[1];
+    var resObj = {
+      media: [],
+      show: [],
+      click: [],
+      money: []
+    }
+    
+    Dao.findMedia(aid, start, end, function(data){
+
+      if(data.error){
+        return next(data);
+      }
+      for(var item of data){
+        resObj.media.push(item.media);
+        resObj.show.push(item.shows);
+        resObj.click.push(item.click);
+        resObj.money.push(item.money.toFixed(2))
+      }
+      next(resObj)
+    });
   }
 
 }
