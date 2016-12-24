@@ -85,6 +85,13 @@ router.get('/solution/:aid/name/:name', function(req, res, next){
     })
 })
 
+//暂停solution
+router.post('/solution/pause/:id', function(req, res, next){
+    solutionAction.pause(req, res, function(data){
+        return res.send(data)
+    });
+})
+
 
 /* banner */
 router.post('/banner/', function(req, res, next){

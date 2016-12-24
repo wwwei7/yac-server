@@ -25,6 +25,12 @@ var handler = {
     data.id = id;
     
     Dao.update(translate(data), next)
+  },
+  pause : function(req, res, next){
+    var values = {
+      disabled: req.body.status
+    }
+    Dao.pause(values, req.params.id,next)
   }
 }
 

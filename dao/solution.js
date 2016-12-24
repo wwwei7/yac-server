@@ -83,4 +83,18 @@ solution.update = function(values, next){
     });
 } 
 
+solution.pause = function(values, id, next){
+
+  connection.query(
+    'UPDATE solution SET ? WHERE id = ?', 
+    [values, id],
+    function(err, result){
+      if(err) {
+        console.log(err.stack);
+        throw err;
+      }
+      next(result);
+    });
+} 
+
 module.exports = solution;
