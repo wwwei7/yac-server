@@ -6,7 +6,7 @@ var report = {};
 
 report.findByHour =  function(aid, date, next){
   
-  var sql = `select sum(shows) as shows , sum(money) as money, sum(click) as click, hour from log_hour 
+  var sql = `select sum(shows) as shows , sum(money) as money, sum(click) as click, sum(service_charge) as service, hour from log_hour 
             where advertiserid=${aid} and \`date\`='${date}' group by hour;`
 
   connection.query( sql, 

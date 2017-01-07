@@ -12,6 +12,7 @@ var handler = {
       showArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       clickArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       moneyArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      serviceArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],      
     };
 
     Dao.findByHour(aid, day, function(data){
@@ -19,7 +20,8 @@ var handler = {
       data.forEach(function(item){
         resObj.showArr[item.hour] = item.shows;
         resObj.clickArr[item.hour] = item.click;
-        resObj.moneyArr[item.hour] = item.money; 
+        resObj.moneyArr[item.hour] = item.money;
+        resObj.serviceArr[item.hour] = item.service;          
       }) 
       next(resObj);
     });
