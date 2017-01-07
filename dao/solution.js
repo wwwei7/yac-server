@@ -1,5 +1,6 @@
 var connection = require('./connection.js');
 var solution = {};
+var Moment = require('moment');
 
 solution.findById = function(id, next){
     connection.query('SELECT * FROM solution WHERE id=' + id, 
@@ -8,6 +9,8 @@ solution.findById = function(id, next){
                 next(err);                
                 throw err;
             }
+            rows[0].start_date = Moment(rows[0].start_date).format('YYYY-MM-DD');
+            rows[0].end_date = Moment(rows[0].end_date).format('YYYY-MM-DD');
             next(rows[0]);
         }
     );
