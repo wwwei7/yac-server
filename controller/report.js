@@ -48,7 +48,8 @@ var handler = {
         resObj[day_key] = {
           show: 0,
           click: 0,
-          money: 0        
+          money: 0,
+          service: 0       
         };
       }
 
@@ -58,7 +59,7 @@ var handler = {
         day_data.show = item.shows;
         day_data.click = item.click;
         day_data.money = item.money;
-       
+        day_data.service = item.service;
       });
       
       next(resObj);

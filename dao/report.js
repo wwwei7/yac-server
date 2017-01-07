@@ -23,7 +23,7 @@ report.findByHour =  function(aid, date, next){
 
 report.findByDay = function(aid, start, end, next){
 
-  var sql = `select sum(shows) as shows , sum(money) as money, sum(click) as click, date from log_hour 
+  var sql = `select sum(shows) as shows , sum(money) as money, sum(click) as click, sum(service_charge) as service, date from log_hour 
             WHERE advertiserid='${aid}' AND date between '${start}' AND '${end}' group by date`;
 
     connection.query(sql, 
