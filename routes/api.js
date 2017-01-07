@@ -37,13 +37,20 @@ router.get('/advertiser/:id', function(req, res, next){
         return res.send(data)
     })
 })
+//编辑广告主
+router.post('/advertiser/:id', function(req, res, next){
+    var id = req.params.id;
+    var values = req.body;
+    advertiser.update(id, values, function(data){
+        return res.send(data)
+    })
+})
 router.get('/advertiser/user/:uid', function(req, res, next){
     var uid = req.params.uid;
     advertiser.findByUid(uid, function(data){
         return res.send(data)
     })
 })
-
 router.get('/advertiser/:uid/name/:name', function(req, res, next){
     var uid = req.params.uid; 
     var name = req.params.name;
@@ -61,8 +68,7 @@ router.post('/solution', function(req, res, next){
 })
 
 router.get('/solution/:id', function(req, res, next){
-    var id = req.params.id;
-    solution.findById(id,function(data){
+    solutionAction.findById(req, res, function(data){
         return res.send(data)
     })
 })

@@ -9,8 +9,6 @@ solution.findById = function(id, next){
                 next(err);                
                 throw err;
             }
-            rows[0].start_date = Moment(rows[0].start_date).format('YYYY-MM-DD');
-            rows[0].end_date = Moment(rows[0].end_date).format('YYYY-MM-DD');
             next(rows[0]);
         }
     );
@@ -48,7 +46,7 @@ solution.insert = function(values, next){
       adx = values.adx,
       media = values.media,
       start_date = values.start,
-      end_date = values.end,
+      end_date = values.end || '2030-12-31',
       budget = values.budget,
       price = values.price;      
   if(!advertiser_id){
