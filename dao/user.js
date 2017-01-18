@@ -29,7 +29,7 @@ user.find = function(name,psw,done){
                 user.role = row.role;
                 user.company = row.company;
                 user.uid = row.id;
-                user.advertiserid = row.advertiserid;
+                user.advertiserid = row.advertiser_id;
                 done(user);
                 return;
             }
