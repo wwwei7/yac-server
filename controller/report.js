@@ -7,6 +7,11 @@ var handler = {
   findByHour: function(req, res, next){
     var aid = req.params.aid,
         day = req.params.day;
+    var userRole = req.session.user ? req.session.user.role : null;
+
+    if(!userRole){
+      return next({err: 'login'})
+    }
 
     var resObj = {
       showArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -17,12 +22,24 @@ var handler = {
 
     Dao.findByHour(aid, day, function(data){
       
-      data.forEach(function(item){
-        resObj.showArr[item.hour] = item.shows;
-        resObj.clickArr[item.hour] = item.click;
-        resObj.moneyArr[item.hour] = item.money;
-        resObj.serviceArr[item.hour] = item.service;          
-      }) 
+      switch(userRole){
+        case 'agency':
+          data.forEach(function(item){
+            resObj.showArr[item.hour] = item.shows;
+            resObj.clickArr[item.hour] = item.click;
+            resObj.moneyArr[item.hour] = item.money;
+            resObj.serviceArr[item.hour] = item.service;          
+          });
+          break;
+        case 'advertiser':
+          data.forEach(function(item){
+            resObj.showArr[item.hour] = item.shows;
+            resObj.clickArr[item.hour] = item.click;
+            resObj.moneyArr[item.hour] = item.money + item.service;
+          });
+          break;
+      }
+      
       next(resObj);
     });
   },
@@ -32,6 +49,11 @@ var handler = {
     var days = req.params.days.split('t');
     var start = days[0],
         end = days[1];
+    var userRole = req.session.user ? req.session.user.role : null;
+
+    if(!userRole){
+      return next({err: 'login'})
+    }
     
     Dao.findByDay(aid, start, end, function(data){
 
@@ -51,18 +73,31 @@ var handler = {
           show: 0,
           click: 0,
           money: 0,
-          service: 0       
+          service: 0
         };
       }
-
-      data.forEach(function(item){
-        var day = Moment(item.date).format('YYYY-MM-DD');
-        var day_data = resObj[day];
-        day_data.show = item.shows;
-        day_data.click = item.click;
-        day_data.money = item.money;
-        day_data.service = item.service;
-      });
+      
+      switch(userRole){
+        case 'agency':
+          data.forEach(function(item){
+            var day = Moment(item.date).format('YYYY-MM-DD');
+            var day_data = resObj[day];
+            day_data.show = parseFloat(item.shows.toFixed(2));
+            day_data.click = parseFloat(item.click.toFixed(2));
+            day_data.money = parseFloat(item.money.toFixed(2));
+            day_data.service = parseFloat(item.service.toFixed(2));
+          });
+          break;
+        case 'advertiser':
+          data.forEach(function(item){
+            var day = Moment(item.date).format('YYYY-MM-DD');
+            var day_data = resObj[day];
+            day_data.show = parseFloat(item.shows.toFixed(2));
+            day_data.click = parseFloat(item.click.toFixed(2));
+            day_data.money = parseFloat((item.money + item.service).toFixed(2));
+          });
+          break;
+      }
       
       next(resObj);
     });

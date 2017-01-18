@@ -9,10 +9,9 @@ var login = function(req, res, next){
     var callback = function(user){
         if(user){
             req.session.user = user;
-            console.log(req.session.id)
             return res.redirect('/app');
         }else{
-              res.render('index', { err: '用户名或密码错误'});
+            res.render('index', { err: '用户名或密码错误'});
         }
     };
 

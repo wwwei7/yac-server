@@ -2,13 +2,16 @@ var connection = require('./connection.js');
 var advertiser = {};
 
 advertiser.findById = function(id, next){
+    if(!id){
+        return next({});
+    }
     connection.query('SELECT * FROM advertiser WHERE id=' + id, 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
                 throw err;
             }
-            next(rows);
+            next(rows[0]);
         }
     );
 }
@@ -62,6 +65,23 @@ advertiser.insert = function(values, next){
       next('success');
     }
   );
-} 
+}
+
+advertiser.update = function(id, values, next){
+  if(!id){
+    next("advertiserid doesn't exist");
+  }
+  connection.query(
+    'UPDATE advertiser SET ? WHERE id = ?', 
+    [values, id],
+    function(err, result){
+      if(err) {
+        next('insert failed')
+        console.log(err.stack);
+        throw err;
+      }
+      next('success');
+    });
+}  
 
 module.exports = advertiser;
