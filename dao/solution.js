@@ -39,22 +39,10 @@ solution.findInName = function(aid, name , next){
 }
 
 solution.insert = function(values, next){
-  var advertiser_id = values.advertiser_id,
-      solution_name = values.solution_name,
-      region_type = values.region_type,
-      region_value = values.region_value,
-      adx = values.adx,
-      media = values.media,
-      start_date = values.start,
-      end_date = values.end || '2030-12-31',
-      budget = values.budget,
-      price = values.price;      
-  if(!advertiser_id){
-    next("aid doesn't exist");
-  }
+  
   connection.query(
-    'INSERT INTO solution (advertiser_id, solution_name, region_type, region_value, adx, media, start_date, end_date, budget, price) VALUES (?,?,?,?,?,?,?,?,?,?)',
-    [advertiser_id, solution_name, region_type, region_value, adx, media, start_date, end_date, budget, price],
+    'INSERT INTO solution SET ?',
+    values,
     function(err, result){
       if(err) {
           next('insert failed')

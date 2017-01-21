@@ -61,8 +61,7 @@ router.get('/advertiser/:uid/name/:name', function(req, res, next){
 
 /* solution */
 router.post('/solution', function(req, res, next){
-    var data = req.body;
-    solution.insert(data, function(state){
+    solutionAction.insert(req, res, function(state){
         return res.send(state);
     })
 })

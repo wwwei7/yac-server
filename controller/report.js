@@ -27,15 +27,15 @@ var handler = {
           data.forEach(function(item){
             resObj.showArr[item.hour] = item.shows;
             resObj.clickArr[item.hour] = item.click;
-            resObj.moneyArr[item.hour] = item.money;
-            resObj.serviceArr[item.hour] = item.service;          
+            resObj.moneyArr[item.hour] = parseFloat(item.money.toFixed(2));
+            resObj.serviceArr[item.hour] = parseFloat(item.service.toFixed(2));          
           });
           break;
         case 'advertiser':
           data.forEach(function(item){
             resObj.showArr[item.hour] = item.shows;
             resObj.clickArr[item.hour] = item.click;
-            resObj.moneyArr[item.hour] = item.money + item.service;
+            resObj.moneyArr[item.hour] = parseFloat((item.money + item.service).toFixed(2));
           });
           break;
       }
@@ -82,8 +82,8 @@ var handler = {
           data.forEach(function(item){
             var day = Moment(item.date).format('YYYY-MM-DD');
             var day_data = resObj[day];
-            day_data.show = parseFloat(item.shows.toFixed(2));
-            day_data.click = parseFloat(item.click.toFixed(2));
+            day_data.show = item.shows;
+            day_data.click = item.click;
             day_data.money = parseFloat(item.money.toFixed(2));
             day_data.service = parseFloat(item.service.toFixed(2));
           });
@@ -92,8 +92,8 @@ var handler = {
           data.forEach(function(item){
             var day = Moment(item.date).format('YYYY-MM-DD');
             var day_data = resObj[day];
-            day_data.show = parseFloat(item.shows.toFixed(2));
-            day_data.click = parseFloat(item.click.toFixed(2));
+            day_data.show = item.shows;
+            day_data.click = item.click;
             day_data.money = parseFloat((item.money + item.service).toFixed(2));
           });
           break;

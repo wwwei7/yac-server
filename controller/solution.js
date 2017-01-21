@@ -37,6 +37,13 @@ var handler = {
       next(data);
     })
   },
+  
+  insert: function(req, res, next){
+    var data = req.body;
+
+    Dao.insert(data, next)
+  },
+
   update: function(req, res, next){
     var id = req.params.id,
         data = req.body;
