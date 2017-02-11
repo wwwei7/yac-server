@@ -1,20 +1,37 @@
 extends layout
 
 block content
-  .wrap
-    .title.fl
-      p.main Your Ad Cloud
-      p.sub 优效 · 智选
+  .header
+    .logo
+    .opts
+  .content
+    .wrap
 
-    .login-form.fl
-      form(method="post" action="/action/login")
-        p.err= err
-        input(id="username" name="username" placeholder="用户名")
-        br
-        input(id="password" name="password" type="password" placeholder="密码")
-        br
-        input.btn(id="loginBtn" type="submit" value="登录")
+      .login-form.fr
+        .title 欢迎登录优效广告平台
+        form(method="post" action="/action/login")
+          p.err= err
+          div.input-item
+            label.name
+            input(id="username" name="username" placeholder="用户名")
+          div.input-item 
+            label.pwd        
+            input(id="password" name="password" type="password" placeholder="密码")
+            
+          input.btn-login(id="loginBtn" type="submit" value="登录")
+        .form-footer
 
-  .bgWrap
-  
-  script(src = '/javascripts/index.js')
+  .footer
+    a 通用条款
+    span.split |
+    a 关于我们
+    span.split |
+    a 联系我们
+    span.split |
+    a 隐私政策
+    span.split |
+    a 关注我们
+    span.weibo
+    span.wechat
+
+  script(src = '/javascripts/login.js')
