@@ -61,6 +61,9 @@ charge.balance = function(aid, next){
                 next(err);                
                 throw err;
             }
+            if(rows.length == 0){
+                rows.push({money: 0.00})
+            }
             next(rows[0]);
         }
     );
