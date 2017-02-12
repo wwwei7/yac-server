@@ -11,8 +11,13 @@ charge.insert = function(insertObj,next){
                 next(err);                
                 throw err;
             }
-            //更新余额
-            charge.add(insertObj.advertiser_id, insertObj.money, next);
+            next({
+                data: rows,
+                msg: 'success',
+                status: 200
+            });
+            //更新余额 （已经使用mysql触发器）
+            //charge.add(insertObj.advertiser_id, insertObj.money, next);
         })
 }
 
@@ -46,6 +51,19 @@ charge.add = function(aid, money, next){
             });
         }
     )
+}
+
+//获取余额
+charge.balance = function(aid, next){
+    connection.query('SELECT * FROM charge WHERE advertiser_id=' + aid, 
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows[0]);
+        }
+    );
 }
 
 

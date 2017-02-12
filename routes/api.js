@@ -121,6 +121,11 @@ router.post('/charge', function(req, res, next){
         return res.send(data)
     })
 })
+router.get('/balance/:aid', function(req, res, next){
+    chargeAction.getBalance(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* report */
 router.get('/report/:aid/hour/:day', function(req, res, next){

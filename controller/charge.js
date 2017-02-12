@@ -9,6 +9,10 @@ var handler = {
   findByAid: function(req, res, next){
     var aid = req.params.aid;
     Dao.findByAid(aid, next);
+  },
+  getBalance: function(req, res, next){
+    var aid = req.params.aid;
+    Dao.balance(aid, next);    
   }
 }
 
