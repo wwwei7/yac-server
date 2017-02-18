@@ -9,9 +9,9 @@ var translate = function(data){
       case 'end_date':
         obj['end_date'] = obj['end_date'] || '2030-12-31';
         break;
-      case 'region':
-        obj['region_type'] = value.type;
-        obj['region_value'] = value.value.join ? value.value.join(',') : value.value;
+      case 'region_value':
+        if(data['region_type']==2)
+          obj['region_value'] = value.join ? value.join(',') : value;
         break;
       default:
         obj[key] = value;
