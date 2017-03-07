@@ -17,6 +17,7 @@ var upload = function(req, res, next){
   form.uploadDir = path.join(__dirname, '../tmp');  
   form.maxFieldsSize = 1 * 150 * 1024; //150k  
   form.keepExtensions = true;  
+  form.multiples = true;
 
   //ali-oss client
   var client = new OSS(config.oss);
@@ -58,9 +59,14 @@ var upload = function(req, res, next){
 
     var dimensions = sizeOf(filePath);
 
-    var fileSize = dimensions.width + 'x' + dimensions.height;
-    if(sizeList.indexOf(fileSize)== -1){
-      return res.status(403).send({msg: '当前暂不支持 '+ fileSize+ ' 的图片尺寸！'})
+    var dimension = dimensions.width + 'x' + dimensions.height;
+    if(sizeList.indexOf(dimension)== -1){
+      return res.send({
+        status: 'fail',
+        dimension: dimension,
+        msg: '当前暂不支持 '+ dimension+ ' 的图片尺寸！'
+      })
+      
     }
 
     // 检查是否存在改尺寸图片
@@ -74,14 +80,20 @@ var upload = function(req, res, next){
       fs.unlink(filePath)
 
       return res.send({
+        status: 'success',
         name: file.name.replace(extName,'').slice(0,-1),
         width: dimensions.width,
         height: dimensions.height,
+        dimension: dimension,
         url: result.url.replace('yac-material.oss-cn-qingdao.aliyuncs.com','mt.youradcloud.com')
       })
     }).catch(function (err) {
-      console.log(err);
-      return res.status(400).send(err)
+      // console.log(err);
+      return res.send({
+        status: 'error',
+        err: err,
+        dimension: dimension
+      })
     });
     
   })
