@@ -12,6 +12,8 @@ var translate = function(data){
       case 'region_value':
         if(data['region_type']==2)
           obj['region_value'] = value.join ? value.join(',') : value;
+        else
+          obj[key] = value;          
         break;
       default:
         obj[key] = value;
