@@ -7,7 +7,7 @@ var bannerAction = require('../controller/banner');
 var solutionAction = require('../controller/solution');
 var chargeAction = require('../controller/charge');
 var reportAction = require('../controller/report');
-var agencyAction = require('../controller/agency');
+// var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
 
 
@@ -97,16 +97,16 @@ router.post('/solution/pause/:id', function(req, res, next){
 })
 
 /* admin */
-router.get('/agency',function(req, res, next){
-    agencyAction.getList(req, res, function(data){
-        return res.send(data)
-    })
-})
-router.get('/agency/:agid',function(req, res, next){
-    agencyAction.get(req, res, function(data){
-        return res.send(data)
-    })
-})
+// router.get('/agency',function(req, res, next){
+//     agencyAction.getList(req, res, function(data){
+//         return res.send(data)
+//     })
+// })
+// router.get('/agency/:agid',function(req, res, next){
+//     agencyAction.get(req, res, function(data){
+//         return res.send(data)
+//     })
+// })
 
 /* banner */
 router.post('/banner/', function(req, res, next){
