@@ -4,10 +4,11 @@ var connection = require('./connection.js');
 
 var report = {};
 
-report.findByHour =  function(aid, date, next){
+report.findByHour =  function(aid, sid, date, next){
+  const sidCondition = sid ? `AND solutionid='${sid}'` : '';  
   
   var sql = `select sum(shows) as shows , sum(money) as money, sum(click) as click, sum(service_charge) as service, hour from log_hour 
-            where advertiserid=${aid} and \`date\`='${date}' group by hour;`
+            where advertiserid=${aid} ${sidCondition} and \`date\`='${date}' group by hour;`
 
   connection.query( sql, 
       function(err, rows, fields) {
@@ -21,10 +22,12 @@ report.findByHour =  function(aid, date, next){
 }
 
 
-report.findByDay = function(aid, start, end, next){
+report.findByDay = function(aid, sid, start, end, next){
+
+  const sidCondition = sid ? `AND solutionid='${sid}'` : '';
 
   var sql = `select sum(shows) as shows , sum(money) as money, sum(click) as click, sum(service_charge) as service, date from log_hour 
-            WHERE advertiserid='${aid}' AND date between '${start}' AND '${end}' group by date`;
+            WHERE advertiserid='${aid}' ${sidCondition} AND date between '${start}' AND '${end}' group by date`;
 
     connection.query(sql, 
       function(err, rows, fields) {

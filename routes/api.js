@@ -7,6 +7,7 @@ var bannerAction = require('../controller/banner');
 var solutionAction = require('../controller/solution');
 var chargeAction = require('../controller/charge');
 var reportAction = require('../controller/report');
+var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
 
 
@@ -65,7 +66,6 @@ router.post('/solution', function(req, res, next){
         return res.send(state);
     })
 })
-
 router.get('/solution/:id', function(req, res, next){
     solutionAction.findById(req, res, function(data){
         return res.send(data)
@@ -89,7 +89,6 @@ router.get('/solution/:aid/name/:name', function(req, res, next){
         return res.send(data)
     })
 })
-
 //暂停solution
 router.post('/solution/pause/:id', function(req, res, next){
     solutionAction.pause(req, res, function(data){
@@ -97,6 +96,17 @@ router.post('/solution/pause/:id', function(req, res, next){
     });
 })
 
+/* admin */
+router.get('/agency',function(req, res, next){
+    agencyAction.getList(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/agency/:agid',function(req, res, next){
+    agencyAction.get(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* banner */
 router.post('/banner/', function(req, res, next){
@@ -128,12 +138,22 @@ router.get('/balance/:aid', function(req, res, next){
 })
 
 /* report */
-router.get('/report/:aid/hour/:day', function(req, res, next){
+router.get('/report/:aid/hour/:day/', function(req, res, next){
+    reportAction.findByHour(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/report/:aid/hour/:day/:sid', function(req, res, next){
     reportAction.findByHour(req, res, function(data){
         return res.send(data)
     })
 })
 router.get('/report/:aid/days/:days', function(req, res, next){
+    reportAction.findByDays(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/report/:aid/days/:days/:sid', function(req, res, next){
     reportAction.findByDays(req, res, function(data){
         return res.send(data)
     })

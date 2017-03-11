@@ -6,6 +6,7 @@ var handler = {
 
   findByHour: function(req, res, next){
     var aid = req.params.aid,
+        sid = req.params.sid,    
         day = req.params.day;
     var userRole = req.session.user ? req.session.user.role : null;
 
@@ -20,7 +21,7 @@ var handler = {
       serviceArr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],      
     };
 
-    Dao.findByHour(aid, day, function(data){
+    Dao.findByHour(aid, sid, day, function(data){
       
       switch(userRole){
         case 'agency':
@@ -45,17 +46,18 @@ var handler = {
   },
 
   findByDays: function(req, res, next){
-    var aid = req.params.aid;
-    var days = req.params.days.split('t');
+    var aid = req.params.aid,
+        sid = req.params.sid,
+        days = req.params.days.split('t');
     var start = days[0],
         end = days[1];
     var userRole = req.session.user ? req.session.user.role : null;
-
+    
     if(!userRole){
       return next({err: 'login'})
     }
     
-    Dao.findByDay(aid, start, end, function(data){
+    Dao.findByDay(aid, sid, start, end, function(data){
 
       if(data.error){
         return next(data);
@@ -105,8 +107,8 @@ var handler = {
 
 
   findMedia: function(req, res, next){
-    var aid = req.params.aid;
-    var days = req.params.days.split('t');
+    var aid = req.params.aid,
+        days = req.params.days.split('t');
     var start = days[0],
         end = days[1];
     var resObj = {
