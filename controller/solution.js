@@ -7,7 +7,7 @@ var translate = function(data){
     var value = data[key];
     switch(key){
       case 'end_date':
-        obj['end_date'] = obj['end_date'] || '2030-12-31';
+        obj['end_date'] = value || '2030-12-31';
         break;
       case 'region_value':
         if(data['region_type']==2)
