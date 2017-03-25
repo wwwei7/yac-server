@@ -6,12 +6,16 @@ var translate = function(data){
   Object.keys(data).map(function(key,index){
     var value = data[key];
     switch(key){
+      case 'start_date':
+        obj[key] = value + ' 00:00:00';
+        break;
       case 'end_date':
-        obj['end_date'] = value || '2030-12-31';
+        value = value || '2030-12-31';
+        obj[key] = value + ' 23:59:59';
         break;
       case 'region_value':
         if(data['region_type']==2)
-          obj['region_value'] = value.join ? value.join(',') : value;
+          obj[key] = value.join ? value.join(',') : value;
         else
           obj[key] = value;          
         break;
