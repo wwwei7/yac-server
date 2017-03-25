@@ -1,13 +1,13 @@
 
 var check = function(req,res,next){
 
-      // return res.send({
-      //   user: {
-      //     name: 'testname7',
-      //     role: 'agency',
-      //     uid: '100002'  
+      // if(!req.session.user)
+      //   req.session.user = {
+      //       name: 'testname22',
+      //       role: 'agency',
+      //       uid: '100008',
+      //       advertiserid: '100003'
       //   }
-      // })
 
   try{
     // var sid = req.cookies['connect.sid'];
