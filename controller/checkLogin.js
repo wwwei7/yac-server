@@ -18,9 +18,7 @@ var check = function(req,res,next){
         user: req.session.user
       })
     }else{
-      return res.send({
-        err: 'illegal access'
-      });
+      return res.redirect('/');
     }
   }catch(err){
     return res.redirect('/');
