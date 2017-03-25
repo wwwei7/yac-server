@@ -3,10 +3,10 @@ var check = function(req,res,next){
 
       // if(!req.session.user)
       //   req.session.user = {
-      //       name: 'testname22',
+      //       name: '广州优效',
       //       role: 'agency',
-      //       uid: '100008',
-      //       advertiserid: '100003'
+      //       uid: '100004',
+      //       advertiserid: ''
       //   }
 
   try{
@@ -23,9 +23,7 @@ var check = function(req,res,next){
       });
     }
   }catch(err){
-    return res.send({
-      err: 'illegal access'
-    });
+    return res.redirect('/');
   }
 }
 
