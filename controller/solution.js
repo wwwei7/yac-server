@@ -21,13 +21,13 @@ var translate = function(data){
         break;
       case 'hour_rangexxx':
         if(data['hourFull'])
-          obj[key] = '16777215-16777215-16777215-16777215-16777215-16777215-16777215';
+          obj[key] = '16777215_16777215_16777215_16777215_16777215_16777215_16777215';
         else{
-          var arr = value.split('-'), item, temp=[];
+          var arr = value.split('_'), item, temp=[];
           for(item of arr){
             temp.push(parseInt(item,2))
           }
-          obj[key] = temp.join('-')
+          obj[key] = temp.join('_')
         }
 
       default:
@@ -54,10 +54,10 @@ var handler = {
       }
 
       // 
-      if(hourRange == "16777215-16777215-16777215-16777215-16777215-16777215-16777215"){
+      if(hourRange == "16777215_16777215_16777215_16777215_16777215_16777215_16777215"){
         data.hourFull = true;
       }else{
-        hours = hourRange.split('-');
+        hours = hourRange.split('_');
         var temp = [];
         for(let hour of hours){
           let binStr = parseInt(hour).toString(2);
@@ -67,7 +67,7 @@ var handler = {
           }
           temp.push(binStr)
         }
-        data.hour_range = temp.join('-');
+        data.hour_range = temp.join('_');
         data.hourFull = false;
       }
 
