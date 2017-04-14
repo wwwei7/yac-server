@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var cookieParser = require('cookie-parser');
+var assetsAction = require('../controller/assets');
 var advertiser = require('../dao/advertiser');
 var solution = require('../dao/solution');
 var bannerAction = require('../controller/banner');
@@ -11,6 +12,13 @@ var reportAction = require('../controller/report');
 var industryDao = require('../dao/industry');
 
 
+/* 静态资源 */
+router.get('/assets', function(req, res, next){
+    assetsAction(req,res,function(data){
+        res.send(data)
+    })
+})
+
 router.get('/user/:id', function(req, res, next) {
     var id = req.params.id;
     var sessionId = cookieParser.signedCookie(req.cookies.SESSIONID, 'yac secret hello');        
@@ -18,11 +26,6 @@ router.get('/user/:id', function(req, res, next) {
     res.header("Content-Type", "application/json;charset=utf-8");
 
     return res.send(JSON.stringify({'user':id}));
-});
-
-router.get('/product/:id', function(req, res, next) {
-    var id = req.params.id;
-    res.send('product id : ' + id);
 });
 
 /* 广告主 */

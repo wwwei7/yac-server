@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../controller/login')
+var auth = require('../controller/login');
+var assets = require('../assets.config.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  var domain = req.headers.host.split(':')[0];
+  var assetsData = assets[domain]
+  res.render('index',{assets: assetsData});
 });
 
 router.get('/success', function(req, res, next) {

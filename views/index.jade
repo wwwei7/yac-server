@@ -2,13 +2,13 @@ extends layout
 
 block content
   .header
-    .logo
+    .logo(style="background-image:url(#{assets.logo})")
     .opts
   .content
     .wrap
 
       .login-form.fr
-        .title 欢迎登录优效广告平台
+        .title 欢迎登录#{assets.dname}广告平台
         form(method="post" action="/action/login")
           p.err= err
           div.input-item
@@ -33,8 +33,8 @@ block content
     a 关注我们
     span.weibo
     span.wechat
-    .fr ©2017 广州优效广告有限公司
+    .fr ©2017 #{assets.dname}广告有限公司
       span.split |
-      粤ICP备16037727号-1
+      #{assets.icp}
 
   script(src = '/javascripts/login.js')
