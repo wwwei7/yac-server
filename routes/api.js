@@ -8,6 +8,7 @@ var bannerAction = require('../controller/banner');
 var solutionAction = require('../controller/solution');
 var chargeAction = require('../controller/charge');
 var reportAction = require('../controller/report');
+var trafficFilterAction = require('../controller/trafficFilter');
 // var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
 
@@ -179,6 +180,18 @@ router.get('/reportdl/:aid/hour/:day', function(req, res, next){
 })
 router.get('/reportdl/:aid/media/:days', function(req, res, next){
     reportAction.downloadMedia(req, res, function(data){
+        return res.send(data);
+    })
+})
+
+/* 流量过滤 */
+router.get('/trafficFilter/:aid', function(req, res, next){
+    trafficFilterAction.getByAid(req, res, function(data){
+        return res.send(data);
+    })
+})
+router.post('/trafficFilter/:aid', function(req, res, next){
+    trafficFilterAction.insert(req, res, function(data){
         return res.send(data);
     })
 })
