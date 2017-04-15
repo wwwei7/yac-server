@@ -166,6 +166,22 @@ router.get('/report/:aid/media/:days', function(req, res, next){
         return res.send(data);
     })
 })
+// 报表下载接口
+router.get('/reportdl/:aid/days/:days', function(req, res, next){
+    reportAction.downloadByDays(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/reportdl/:aid/hour/:day', function(req, res, next){
+    reportAction.downloadByHour(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/reportdl/:aid/media/:days', function(req, res, next){
+    reportAction.downloadMedia(req, res, function(data){
+        return res.send(data);
+    })
+})
 
 /* util */
 router.get('/industry', function(req, res, next){
