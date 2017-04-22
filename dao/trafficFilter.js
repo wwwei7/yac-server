@@ -2,9 +2,9 @@ var connection = require('./connection.js');
 var dao = {}
 
 dao.insert = function(val,next){
-    var sql = `INSERT INTO traffic_filter_config (advertiser_id, media, location, ip) VALUES ? 
-        ON DUPLICATE KEY UPDATE media=${val.media}, location=${val.location}, ip=${val.ip}`;
-    connection.query(sql, val,
+    var sql = `INSERT INTO traffic_filter_config (advertiser_id, media, location, ip) VALUES (${val.advertiser_id}, '${val.media}', '${val.location}', '${val.ip}') 
+        ON DUPLICATE KEY UPDATE media='${val.media}', location='${val.location}', ip='${val.ip}'`;
+    connection.query(sql,
         function(err, rows, fields){
             if (err) {
                 next(err);                
@@ -28,22 +28,6 @@ dao.getByAid = function(aid, next){
             next(rows);
         }
     );
-}
-
-dao.update = function(aid, val, next){
-    connection.query('UPDATE traffic_filter_config SET ? WHERE aid = ?',
-        [val, aid],
-        function(err, rows, fields){
-            if (err) {
-                next(err);                
-                throw err;
-            }
-            next({
-                data: rows,
-                msg: 'success',
-                status: 200
-            });
-        })
 }
 
 
