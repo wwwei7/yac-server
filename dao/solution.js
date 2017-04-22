@@ -51,7 +51,8 @@ solution.insert = function(values, next){
       }
       next({
           success: true,
-          sid: result.insertId
+          sid: parseInt(result.insertId),
+          sname: values.solution_name
       });
     }
   );
@@ -71,7 +72,11 @@ solution.update = function(values, next){
         console.log(err.stack);
         throw err;
       }
-      next('success');
+      next({
+          success: true,
+          sid: values.id,
+          sname: values.solution_name
+      });
     });
 } 
 
