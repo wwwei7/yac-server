@@ -2,8 +2,8 @@ var connection = require('./connection.js');
 var dao = {}
 
 dao.insert = function(val,next){
-    var sql = `INSERT INTO traffic_filter_config (advertiser_id, media, location, ip, smart) VALUES ? 
-        ON DUPLICATE KEY UPDATE media=${val.media}, location=${val.location}, ip=${val.ip}, smart=${val.smart}`;
+    var sql = `INSERT INTO traffic_filter_config (advertiser_id, media, location, ip) VALUES ? 
+        ON DUPLICATE KEY UPDATE media=${val.media}, location=${val.location}, ip=${val.ip}`;
     connection.query(sql, val,
         function(err, rows, fields){
             if (err) {

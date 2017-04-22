@@ -11,8 +11,7 @@ var dataFilter = function(data, next){
     advertiser_id: data.aid,
     media: data.media || '',
     location: data.location || '',
-    ip: data.ip || '',
-    smart: data.smart || 0
+    ip: data.ip || ''
   }
 }
 var handler = {
@@ -25,7 +24,7 @@ var handler = {
     var aid = req.params.aid;
     Dao.getByAid(aid, next);
   },
-  
+
   update: function(req, res, next){
     var data = dataFilter(req.body);
 
