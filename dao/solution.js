@@ -45,11 +45,14 @@ solution.insert = function(values, next){
     values,
     function(err, result){
       if(err) {
-          next('insert failed')
+          next({err: 'insert failed'})
           console.log(err.stack);
           throw err;
       }
-      next('success');
+      next({
+          success: true,
+          sid: result.insertId
+      });
     }
   );
 } 

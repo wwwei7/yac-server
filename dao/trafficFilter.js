@@ -29,5 +29,21 @@ dao.getByAid = function(aid, next){
     );
 }
 
+dao.update = function(aid, val, next){
+    connection.query('UPDATE traffic_filter_config SET ? WHERE aid = ?',
+        [val, aid],
+        function(err, rows, fields){
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next({
+                data: rows,
+                msg: 'success',
+                status: 200
+            });
+        })
+}
+
 
 module.exports = dao;
