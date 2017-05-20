@@ -26,6 +26,18 @@ solution.findByAid = function(aid,next){
     );
 }
 
+solution.findByType = function(aid, type, next){
+    connection.query('SELECT * FROM solution WHERE advertiser_id='+ aid +' AND solution_type=' + type, 
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows);
+        }
+    );
+}
+
 solution.findInName = function(aid, name , next){
     var i, row, adlist = [];
     connection.query('SELECT * FROM solution WHERE advertiser_id='+aid+' AND solution_name="'+name+'"', 

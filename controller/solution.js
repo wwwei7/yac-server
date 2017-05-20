@@ -74,6 +74,32 @@ var handler = {
       next(data);
     })
   },
+
+  findGroupByType: function(req, res, next){
+    var aid = req.params.aid;
+    var resObj = {
+      pc: [],
+      mobile: [],
+      ott: []
+    }
+    Dao.findByAid(aid, function(data){
+      console.log(data)
+      data.map(item => {
+        switch(item.solution_type){
+          case 1:
+            resObj.pc.push(item)
+            break;
+          case 2:
+            resObj.mobile.push(item)
+            break;
+          case 3:
+            resObj.ott.push(item)          
+            break;
+        }
+      })
+      next(resObj)
+    })
+  },
   
   insert: function(req, res, next){
     var data = req.body;

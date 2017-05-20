@@ -86,6 +86,13 @@ router.get('/solution/ad/:aid', function(req, res, next){
         return res.send(data)
     })
 })
+//根据type分组当前广告主所有推广计划
+router.get('/solution/gtype/ad/:aid', function(req, res, next){
+    solutionAction.findGroupByType(req, res, function(data){
+        return res.send(data)
+    })
+})
+//根据名称查找
 router.get('/solution/:aid/name/:name', function(req, res, next){
     var aid = req.params.aid; 
     var name = req.params.name;

@@ -10,7 +10,7 @@ var randomstring = require("randomstring");
 
 
 //当前支持的图片尺寸
-var sizeList = ['336x280', '300x250', '960x90', '728x90', '250x250', '120x240'];
+var sizeList = ['336x280', '320x50', '300x250', '960x90', '728x90', '250x250', '120x240'];
 
 var upload = function(req, res, next){
   var form = new formidable.IncomingForm();
