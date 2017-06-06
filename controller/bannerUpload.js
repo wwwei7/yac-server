@@ -8,14 +8,24 @@ var config = require('../config');
 var dao = require('../dao/banner');
 var randomstring = require("randomstring");
 
+var solutionType = {
+  "1": 'pc',
+  "2": 'mobile',
+  "3": 'ott'
+}
 
 //当前支持的图片尺寸
-var sizeList = ['336x280', '320x50', '300x250', '960x90', '728x90', '250x250', '120x240'];
+var surpportSize = {
+  "pc": ['336x280', '320x50', '300x250', '960x90', '728x90', '250x250', '120x240'],
+  "mobile": [],
+  "ott": ['800x600', '1024x768', '1152x864', '1400x1050', '1600x1200', '2048x1536', '3200x2400', '960x540', '1280x720', '1366x768', '1920x1080', '2560x1440', '3840x2160']
+}
+var pcSizeList = ['336x280', '320x50', '300x250', '960x90', '728x90', '250x250', '120x240'];
 
 var upload = function(req, res, next){
   var form = new formidable.IncomingForm();
   form.uploadDir = path.join(__dirname, '../tmp');  
-  form.maxFieldsSize = 1 * 150 * 1024; //150k  
+  form.maxFieldsSize = 1 * 1024 * 1024; //150k  
   form.keepExtensions = true;  
   form.multiples = true;
 
@@ -55,9 +65,11 @@ var upload = function(req, res, next){
     var file = files.file;
     var filePath = file.path;
     var sid = fields.sid;
-    var fileName = config.ossFileLocation + sid + '/' + randomstring.generate(12) + '.' + extName;
+    var stype = solutionType[fields.stype];
+    var fileName = config.ossFileLocation + sid + '/' + stype + '/' + randomstring.generate(12) + '.' + extName;
 
     var dimensions = sizeOf(filePath);
+    var sizeList = surpportSize[stype];
 
     var dimension = dimensions.width + 'x' + dimensions.height;
     if(sizeList.indexOf(dimension)== -1){
