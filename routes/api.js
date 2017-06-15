@@ -130,6 +130,11 @@ router.get('/banner/ad/:aid', function(req, res, next){
         return res.send(data)
     })
 })
+router.get('/banner/video/sid/:sid', function(req, res, next){
+    bannerAction.findVideoBySid(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* charge */
 router.get('/charge/:aid', function(req, res, next){

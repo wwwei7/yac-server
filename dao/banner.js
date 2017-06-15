@@ -2,17 +2,27 @@ var connection = require('./connection.js');
 var banner = {};
 
 banner.insert = function(values, next){
-    var deleteRows = [];
+    var image = values.image || [];
+    var video = values.video || [];    
     var sql = '('
-    values.map(function(val){
-        deleteRows.push([parseInt(val[7]),val[2],val[3]])
+    image.map(function(val){
         sql+= '('+val[7]+',"'+val[2]+'","'+val[3]+'"),'
+    })
+    video.map(function(val){
+        sql+= '('+val[7]+',"'+val[2]+'","'+val[3]+'"),'
+    })
+    video = video.filter(function(video){
+        if(video[4])
+            return true;
     })
     sql = sql.slice(0,-1)
     sql += ')'
+    
+    var insertValue = image.concat(video)
     connection.beginTransaction(function(err) {
       if (err) { throw err; }
-      connection.query('DELETE FROM banner WHERE (solutionid, width, height) IN '+sql, 
+      //图片
+      connection.query('update banner set deleteflag=1 WHERE (solutionid, width, height) IN '+sql, 
           function(err, result) {
               if (err) { 
                   connection.rollback(function() {
@@ -25,8 +35,24 @@ banner.insert = function(values, next){
                   return;
               }
 
-              connection.query('INSERT INTO banner (name, link, width, height, image, memo, advertiserid, solutionid) VALUES ?',
-                  [values], 
+              if(insertValue.length<1){
+                connection.commit(function(err) {
+                    if (err) { 
+                        connection.rollback(function() {
+                            throw err;
+                        });
+                    }
+                    next({
+                        msg: 'success',
+                        status: 200
+                    })
+                    return;
+                });
+                return;
+              }
+
+              connection.query('INSERT INTO banner (name, link, width, height, image, memo, advertiserid, solutionid, creativetype) VALUES ?',
+                  [insertValue], 
                   function(err, result) {
                       if (err) { 
                           connection.rollback(function() {
@@ -87,6 +113,17 @@ banner.findInSize = function(width, height , next){
             if(rows.length>0)
                 return next(rows[0]);
             next({});
+        }
+    );
+}
+
+banner.findVideoBySid = function(sid, next){
+    connection.query('SELECT * FROM banner WHERE creativetype="video" AND solutionid="'+ sid +'" AND deleteflag=0', 
+        function(err, rows, fields) {
+            if (err) throw err;
+            if(rows.length>0)
+                return next(rows);
+            next([]);
         }
     );
 }
