@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var cookieParser = require('cookie-parser');
-var doLogin = require('../controller/login')
+var loginAction = require('../controller/login')
 var doCheck = require('../controller/checkLogin')
 var doLogout = require('../controller/logout')
 var doUpload = require('../controller/bannerUpload')
@@ -9,7 +9,12 @@ var presetCity = require('../controller/presetCity')
 
 
 router.post('/login', function(req, res, next) {
-    doLogin(req,res);
+    loginAction.login(req,res);
+});
+router.post('/loginspa', function(req, res, next) {
+    loginAction.loginSpa(req,res,function(data){
+        return res.send(data)
+    });
 });
 router.get('/logout', function(req, res, next){
     doLogout(req,res)

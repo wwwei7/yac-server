@@ -1,40 +1,46 @@
-extends layout
+doctype html
+html
+  head
+    meta(chatset="utf-8")
+    title #{assets.title}
+    link(rel='stylesheet', href='/stylesheets/login.css')
+    script(src='/javascripts/lib/jquery.js')
+  body
 
-block content
-  .header
-    .logo(style="background-image:url(#{assets.logo})")
-    .opts
-  .content
-    .wrap
+    block content
+      .header
+        .logo(style="background-image:url(#{assets.logo})")
+        .opts
+      .content
+        .wrap
+          .login-form.fr
+            .title 欢迎登录#{assets.dname}广告平台
+            form(method="post" action="/action/login")
+              p.err= err
+              div.input-item
+                label.name
+                input(id="username" name="username" placeholder="用户名")
+              div.input-item 
+                label.pwd        
+                input(id="password" name="password" type="password" placeholder="密码")
+                
+              input.btn-login(id="loginBtn" type="submit" value="登录")
+            .form-footer
 
-      .login-form.fr
-        .title 欢迎登录#{assets.dname}广告平台
-        form(method="post" action="/action/login")
-          p.err= err
-          div.input-item
-            label.name
-            input(id="username" name="username" placeholder="用户名")
-          div.input-item 
-            label.pwd        
-            input(id="password" name="password" type="password" placeholder="密码")
-            
-          input.btn-login(id="loginBtn" type="submit" value="登录")
-        .form-footer
+      .footer
+        a 通用条款
+        span.split |
+        a 关于我们
+        span.split |
+        a 联系我们
+        span.split |
+        a 隐私政策
+        span.split |
+        a 关注我们
+        span.weibo
+        span.wechat
+        .fr ©2017 #{assets.dname}广告有限公司
+          span.split |
+          #{assets.icp}
 
-  .footer
-    a 通用条款
-    span.split |
-    a 关于我们
-    span.split |
-    a 联系我们
-    span.split |
-    a 隐私政策
-    span.split |
-    a 关注我们
-    span.weibo
-    span.wechat
-    .fr ©2017 #{assets.dname}广告有限公司
-      span.split |
-      #{assets.icp}
-
-  script(src = '/javascripts/login.js')
+      script(src = '/javascripts/login.js')

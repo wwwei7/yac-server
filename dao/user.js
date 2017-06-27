@@ -19,22 +19,11 @@ connection.connect(function(err){
 var user = {};
 
 user.find = function(name,psw,done){
-    var i, row, user = {};
-    connection.query('SELECT * FROM user_base ', function(err, rows, fields) {
+    var i, row, user = {},
+        sql = `SELECT * FROM user_base WHERE name='${name}' AND psw='${psw}'`
+    connection.query(sql, function(err, rows, fields) {
         if (err) throw err;
-        for(i in rows){
-            row = rows[i];
-            if(row.name == name && row.psw == psw){
-                user.name = name;
-                user.role = row.role;
-                user.company = row.company;
-                user.uid = row.id;
-                user.advertiserid = row.advertiser_id;
-                done(user);
-                return;
-            }
-        }
-        done(false);
+        done(rows[0])
     });
 }
 
