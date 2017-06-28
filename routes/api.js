@@ -12,6 +12,9 @@ var trafficFilterAction = require('../controller/trafficFilter');
 // var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
 
+/* ssp Actions */
+var mediaAction = require('../controller/media')
+
 
 /* 静态资源 */
 router.get('/assets', function(req, res, next){
@@ -135,6 +138,11 @@ router.get('/banner/video/sid/:sid', function(req, res, next){
         return res.send(data)
     })
 })
+router.get('/banner/delete/:bid', function(req, res, next){
+    bannerAction.delete(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* charge */
 router.get('/charge/:aid', function(req, res, next){
@@ -205,6 +213,23 @@ router.get('/trafficFilter/:aid', function(req, res, next){
 router.post('/trafficFilter/:aid', function(req, res, next){
     trafficFilterAction.insert(req, res, function(data){
         return res.send(data);
+    })
+})
+
+/* ssp */
+router.get('/medialist/:uid', function(req, res, next){
+    mediaAction.findList(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.post('/media', function(req, res, next){
+    mediaAction.insert(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/media/:uid/name/:name', function(req, res, next){
+    mediaAction.findInName(req, res, function(data){
+        return res.send(data)
     })
 })
 

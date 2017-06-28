@@ -31,6 +31,13 @@ var handler = {
       }
       next(arr);
     });
+  },
+
+  delete: function(req,res,next){
+    var id = req.params.bid;
+    Dao.delete(id, function(data){
+      next(data)
+    })
   }
 }
 

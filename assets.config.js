@@ -20,7 +20,7 @@ module.exports = {
   'localhost': {
     logo: 'http://mt.youradcloud.com/web/logo-1.png',
     // logo: 'http://mt.youradcloud.com/web/act/348f7e6ca49f1a18/logo-.png',
-    title: '本地调试1',    
+    title: '本地调试',    
     dname: '优效',
     icp: '沪ICP备15005792号-2'    
   }

@@ -81,7 +81,7 @@ banner.insert = function(values, next){
 }
 
 banner.findById = function(id, next){
-    connection.query('SELECT * FROM banner WHERE ID=' + id, 
+    connection.query('SELECT * FROM banner WHERE ID=' + id +' AND deleteflag=0', 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -94,7 +94,7 @@ banner.findById = function(id, next){
 
 banner.findByAid = function(aid,next){
     connection.query(
-        'SELECT banner.ID as bannerid, name, advertiserid, solutionid, memo, link, image, width, height, solution_name FROM banner left join solution on banner.solutionid = solution.id where advertiserid = '+ aid, 
+        'SELECT banner.ID as bannerid, name, advertiserid, solutionid, memo, link, image, width, height, solution_name FROM banner left join solution on banner.solutionid = solution.id where advertiserid = '+ aid +' AND deleteflag=0', 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -107,7 +107,7 @@ banner.findByAid = function(aid,next){
 
 banner.findInSize = function(width, height , next){
     var i, row, adlist = [];
-    connection.query('SELECT * FROM banner WHERE width='+ width +' AND height="'+ height +'"', 
+    connection.query('SELECT * FROM banner WHERE width='+ width +' AND height="'+ height +'" AND deleteflag=0', 
         function(err, rows, fields) {
             if (err) throw err;
             if(rows.length>0)
@@ -131,7 +131,7 @@ banner.findVideoBySid = function(sid, next){
 
 banner.update = function(values, next){
   if(!values.id){
-    next("sid doesn't exist");
+    return next("sid doesn't exist");
   }
   connection.query(
     'UPDATE banner SET ? WHERE id = ?', 
@@ -145,5 +145,28 @@ banner.update = function(values, next){
       next('success');
     });
 } 
+
+banner.delete = function(id, next){
+  if(!id){
+    return next({
+        err: 'id empty'
+    });
+  }
+  connection.query(
+    'UPDATE banner SET deleteflag="1" WHERE id ="'+id+'"', 
+    function(err, result){
+      if(err) {
+        next({
+            err: err
+        })
+        console.log(err.stack);
+        throw err;
+      }
+      next({
+          deleteSuccess: 1,
+          bannerid: id
+      });
+    });
+}
 
 module.exports = banner;
