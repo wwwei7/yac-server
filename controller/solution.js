@@ -75,7 +75,7 @@ var handler = {
     })
   },
 
-  findGroupByType: function(req, res, next){
+  findListByType: function(req, res, next){
     var aid = req.params.aid;
     var resObj = {
       pc: [],
@@ -107,6 +107,17 @@ var handler = {
     Dao.insert(data, next)
   },
 
+  listWithCost: function(req, res, next){
+    var aid = req.params.aid;
+
+    Dao.findListWithCost(aid, function(data){
+      data.map(item => {
+        return item.cost = item.money + item.service || 0
+      })
+      next(data)
+    })
+  },
+
   update: function(req, res, next){
     var id = req.params.id,
         data = req.body;
@@ -115,6 +126,7 @@ var handler = {
     
     Dao.update(translate(data), next)
   },
+
   pause: function(req, res, next){
     var values = {
       disabled: req.body.status

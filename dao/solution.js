@@ -26,6 +26,21 @@ solution.findByAid = function(aid,next){
     );
 }
 
+solution.findListWithCost = function(aid,next){
+    const sql = `SELECT SUM(l.money) as money,SUM(l.service_charge) as service, s.id, s.solution_name ,s.start_date , s.end_date ,s.budget  ,s.status ,s.disabled 
+        FROM solution s LEFT JOIN log_hour l on s.id = l.solutionid and l.date = CURRENT_DATE
+        WHERE s.advertiser_id  = '${aid}' GROUP BY s.id`;
+    connection.query(sql, 
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows);
+        }
+    );
+}
+
 solution.findByType = function(aid, type, next){
     connection.query('SELECT * FROM solution WHERE advertiser_id='+ aid +' AND solution_type=' + type, 
         function(err, rows, fields) {

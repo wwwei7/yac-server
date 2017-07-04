@@ -84,14 +84,13 @@ router.post('/solution/:id', function(req, res, next){
     });
 })
 router.get('/solution/ad/:aid', function(req, res, next){
-    var aid = req.params.aid;
-    solution.findByAid(aid, function(data){
+    solutionAction.listWithCost(req, res, function(data){
         return res.send(data)
     })
 })
 //根据type分组当前广告主所有推广计划
 router.get('/solution/gtype/ad/:aid', function(req, res, next){
-    solutionAction.findGroupByType(req, res, function(data){
+    solutionAction.findListByType(req, res, function(data){
         return res.send(data)
     })
 })
