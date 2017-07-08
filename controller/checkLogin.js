@@ -5,6 +5,7 @@ var check = function(req,res,next){
       //   req.session.user = {
       //       name: '广州优效',
       //       role: 'agency',
+      //       id: 100004,
       //       uid: '100004',
       //       advertiserid: ''
       //   }
