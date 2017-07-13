@@ -6,7 +6,7 @@ var assets = require('../assets.config.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var domain = req.headers.host.split(':')[0];
-  var assetsData = assets[domain]
+  var assetsData = assets[domain] || assets['admin.youradcloud.com']
   res.render('index',{assets: assetsData});
 });
 
