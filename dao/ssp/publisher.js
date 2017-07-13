@@ -1,11 +1,11 @@
 var connection = require('../connection.js');
-var media = {};
+var publisher = {};
 
-media.findById = function(id, next){
+publisher.findById = function(id, next){
     if(!id){
         return next({});
     }
-    connection.query('SELECT * FROM media WHERE id=' + id, 
+    connection.query('SELECT * FROM publisher WHERE id=' + id, 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -16,8 +16,8 @@ media.findById = function(id, next){
     );
 }
 
-media.findList = function(uid,next){
-    connection.query('SELECT * FROM media WHERE user_id='+uid, 
+publisher.findList = function(uid,next){
+    connection.query('SELECT * FROM publisher WHERE ssp_id='+uid, 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -28,9 +28,9 @@ media.findList = function(uid,next){
     );
 }
 
-media.findInName = function(uid, name , next){
+publisher.findNameByPublisher = function(uid, name , next){
     var i, row, adlist = [];
-    connection.query('SELECT * FROM media WHERE user_id='+uid+' AND name="'+name+'"', 
+    connection.query('SELECT * FROM publisher WHERE ssp_id='+uid+' AND name="'+name+'"', 
         function(err, rows, fields) {
             if (err) throw err;
             if(rows.length>0)
@@ -40,39 +40,47 @@ media.findInName = function(uid, name , next){
     );
 }
 
-media.insert = function(values, next){
+publisher.insert = function(values, next){
   var insertObj = {
-    user_id: values.user_id,
+    ssp_id: values.ssp_id,
     name: values.name,
     contacter: values.contacter,
     contact_number: values.contact_number,
     website: values.website,
-    landing_white: values.landing_white,
-    industry: values.industry
+    industry: values.industry,
+    appKey: values.appKey || 'fake'
   }
-  if(!insertObj.user_id){
-    return next("uid doesn't exist");
+  if(!insertObj.ssp_id){
+    return next({
+        err: 1,
+        errMsg: 'invalid ssp_id'
+    });
   }
   connection.query(
-    'INSERT INTO media SET ?',
-    values,
+    'INSERT INTO publisher SET ?',
+    insertObj,
     function(err, result){
       if(err) {
-          next('insert failed')
+          next({
+              err: 1,
+              errMsg: '创建失败'
+          })
           console.log(err.stack);
           throw err;
       }
-      next('success');
+      next({
+          ok: 1
+      });
     }
   );
 }
 
-media.update = function(id, values, next){
+publisher.update = function(id, values, next){
   if(!id){
-    next("mediaid doesn't exist");
+    next("publisherid doesn't exist");
   }
   connection.query(
-    'UPDATE media SET ? WHERE id = ?', 
+    'UPDATE publisher SET ? WHERE id = ?', 
     [values, id],
     function(err, result){
       if(err) {
@@ -84,4 +92,4 @@ media.update = function(id, values, next){
     });
 }  
 
-module.exports = media;
+module.exports = publisher;

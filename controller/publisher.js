@@ -1,4 +1,4 @@
-var Dao = require('../dao/ssp/media');
+var Dao = require('../dao/ssp/publisher');
 var Moment = require('moment');
 
 
@@ -19,9 +19,9 @@ var handler = {
   },
 
   findInName: function(req, res, next){
-    var uid = req.params.uid; 
+    var pid = req.params.pid; 
     var name = req.params.name;
-    Dao.findInName(uid, name, function(data){
+    Dao.findNameByPublisher(pid, name, function(data){
       next(data)
     })
   },

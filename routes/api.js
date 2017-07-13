@@ -9,11 +9,12 @@ var solutionAction = require('../controller/solution');
 var chargeAction = require('../controller/charge');
 var reportAction = require('../controller/report');
 var trafficFilterAction = require('../controller/trafficFilter');
+var adsAction = require('../controller/adspace');
 // var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
 
 /* ssp Actions */
-var mediaAction = require('../controller/media')
+var publisherAction = require('../controller/publisher')
 
 
 /* 静态资源 */
@@ -109,6 +110,22 @@ router.post('/solution/pause/:id', function(req, res, next){
     });
 })
 
+/* adspace */
+router.get('/adspace/list/:publisherID', function(req, res, next){
+    adsAction.getList(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.post('/adspace', function(req, res, next){
+    adsAction.insert(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/adspace/:pid/name/:name', function(req, res, next){
+    adsAction.findInName(req, res, function(data){
+        return res.send(data)
+    })
+})
 /* admin */
 // router.get('/agency',function(req, res, next){
 //     agencyAction.getList(req, res, function(data){
@@ -216,18 +233,18 @@ router.post('/trafficFilter/:aid', function(req, res, next){
 })
 
 /* ssp */
-router.get('/medialist/:uid', function(req, res, next){
-    mediaAction.findList(req, res, function(data){
+router.get('/publisherlist/:uid', function(req, res, next){
+    publisherAction.findList(req, res, function(data){
         return res.send(data)
     })
 })
-router.post('/media', function(req, res, next){
-    mediaAction.insert(req, res, function(data){
+router.post('/publisher', function(req, res, next){
+    publisherAction.insert(req, res, function(data){
         return res.send(data)
     })
 })
-router.get('/media/:uid/name/:name', function(req, res, next){
-    mediaAction.findInName(req, res, function(data){
+router.get('/publisher/:pid/name/:name', function(req, res, next){
+    publisherAction.findInName(req, res, function(data){
         return res.send(data)
     })
 })
