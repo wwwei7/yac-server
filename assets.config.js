@@ -15,7 +15,13 @@ module.exports = {
     logo: 'http://mt.youradcloud.com/web/act/yunpu/logo-yunpu.png',
     title: 'Yuppo 云蒲DSP广告平台',    
     dname: '云蒲',
-    icp: ''
+    icp: '京ICP备17037617号-2'
+  },
+  'dsp.chinaluxus.com': {
+    logo: '',
+    title: '中奢网DSP广告平台',
+    dname: '中奢网',
+    icp: '粤ICP备11101183号-1'
   },
   'localhost': {
     logo: 'http://mt.youradcloud.com/web/logo-1.png',
