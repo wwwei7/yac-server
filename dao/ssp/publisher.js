@@ -1,4 +1,5 @@
 var connection = require('../connection.js');
+var md5 = require('md5')
 var publisher = {};
 
 publisher.findById = function(id, next){
@@ -41,6 +42,14 @@ publisher.findNameByPublisher = function(uid, name , next){
 }
 
 publisher.insert = function(values, next){
+
+  if(!values.ssp_id || !values.apppkg){
+    return next({
+        err: 1,
+        errMsg: 'Not enough for required fields'
+    });
+  }
+  var appKey = md5(values.apppkg + '@y0urAdC!oud#');
   var insertObj = {
     ssp_id: values.ssp_id,
     name: values.name,
@@ -48,14 +57,10 @@ publisher.insert = function(values, next){
     contact_number: values.contact_number,
     website: values.website,
     industry: values.industry,
-    appKey: values.appKey || 'fake'
+    apppkg: values.apppkg,
+    appKey: appKey
   }
-  if(!insertObj.ssp_id){
-    return next({
-        err: 1,
-        errMsg: 'invalid ssp_id'
-    });
-  }
+
   connection.query(
     'INSERT INTO publisher SET ?',
     insertObj,
