@@ -22,9 +22,11 @@ module.exports = {
     icp: '京ICP备17037617号-2'
   },
   'dsp.chinaluxus.com': {
-    logo: '',
-    title: '中奢网DSP广告平台',
-    dname: '中奢网',
+    logo: 'http://mt.youradcloud.com/web/act/chinaluxus/logo.png',
+    logo_bg: 'http://mt.youradcloud.com/web/act/chinaluxus/login_bg.jpg',
+    logo_title: '登录中奢科技广告投放平台',
+    title: '中奢科技广告投放平台',
+    dname: '广州中奢网络科技有限公司',
     icp: '粤ICP备11101183号-1'
   },
   'localhost': {
