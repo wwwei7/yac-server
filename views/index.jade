@@ -11,10 +11,10 @@ html
       .header
         .logo(style="background-image:url(#{assets.logo})")
         .opts
-      .content
+      .content(style=assets.logo_bg ? "background-image:url(#{assets.logo_bg})" : '')
         .wrap
           .login-form.fr
-            .title 欢迎登录#{assets.dname}广告平台
+            .title #{assets.logo_title}
             form(method="post" action="/action/login")
               p.err= err
               div.input-item
@@ -39,7 +39,7 @@ html
         a 关注我们
         span.weibo
         span.wechat
-        .fr ©2017 #{assets.dname}广告有限公司
+        .fr ©2017 #{assets.dname}
           span.split |
           #{assets.icp}
 
