@@ -9,6 +9,7 @@ var solutionAction = require('../controller/solution');
 var chargeAction = require('../controller/charge');
 var reportAction = require('../controller/report');
 var trafficFilterAction = require('../controller/trafficFilter');
+var antiCheatAction = require('../controller/antiCheat');
 var adsAction = require('../controller/adspace');
 // var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
@@ -235,6 +236,17 @@ router.get('/trafficFilter/:aid', function(req, res, next){
 })
 router.post('/trafficFilter/:aid', function(req, res, next){
     trafficFilterAction.insert(req, res, function(data){
+        return res.send(data);
+    })
+})
+/* 反作弊 */
+router.get('/antiCheat/:aid', function(req, res, next){
+    antiCheatAction.getByAid(req, res, function(data){
+        return res.send(data);
+    })
+})
+router.post('/antiCheat/:aid', function(req, res, next){
+    antiCheatAction.insert(req, res, function(data){
         return res.send(data);
     })
 })

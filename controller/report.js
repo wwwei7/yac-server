@@ -192,7 +192,7 @@ var handler = {
     }
     
     Dao.downloadByDay(aid, sid, start, end, function(data){
-      next(dealDownloadDaysData(data, start, end, userRole));
+      next(dealDownloadDaysData(data,userRole));
     });
   },
 
