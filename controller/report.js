@@ -1,4 +1,5 @@
 var Dao = require('../dao/report');
+var sspDao = require('../dao/ssp/report');
 var Moment = require('moment');
 require('moment-range');
 
@@ -46,9 +47,7 @@ var dealDaysData = function(data, start, end, userRole){
           show: 0,
           click: 0,
           money: 0,
-          service: 0,
-          sid: '',
-          sname: ''
+          service: 0
         };
       }
       
@@ -65,6 +64,17 @@ var dealDaysData = function(data, start, end, userRole){
             day_data.sname = item.sname;
           });
           break;
+        case 'ssp':
+          data.forEach(function(item){
+            var day = Moment(item.date).format('YYYY-MM-DD');
+            var day_data = resObj[day];
+            day_data.show = item.shows;
+            day_data.click = item.click;
+            day_data.money = parseFloat(item.money.toFixed(2));
+            day_data.service = parseFloat(item.service.toFixed(2));
+            day_data.adspaceid = item.adspaceid;
+          });
+          break;
         case 'advertiser':
           data.forEach(function(item){
             var day = Moment(item.date).format('YYYY-MM-DD');
@@ -76,6 +86,15 @@ var dealDaysData = function(data, start, end, userRole){
             day_data.sname = item.sname;            
           });
           break;
+        default:
+          data.forEach(function(item){
+            var day = Moment(item.date).format('YYYY-MM-DD');
+            var day_data = resObj[day];
+            day_data.show = item.shows;
+            day_data.click = item.click;
+            day_data.money = parseFloat(item.money.toFixed(2));
+            day_data.service = parseFloat(item.service.toFixed(2));
+          });        
       }
 
       return resObj;
@@ -235,7 +254,22 @@ var handler = {
 
       next(data)
     });
-  }
+  },
+
+  sspFindByDays: function(req, res, next){
+    const pid = req.params.pid,
+          days = req.params.days.split('t')
+          adsid = req.query.adsid;
+    const start = days[0],
+          end = days[1];
+    var userRole = req.session.user ? req.session.user.role : null;
+    if(!userRole){
+      // return next({err: 'need login'})
+    }
+    sspDao.findByDay(pid, adsid, start, end, function(data){
+      next(dealDaysData(data, start, end, userRole));
+    });
+  },
 
 }
 

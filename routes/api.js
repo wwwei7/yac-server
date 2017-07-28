@@ -204,6 +204,13 @@ router.get('/report/:aid/media/:days', function(req, res, next){
         return res.send(data);
     })
 })
+
+//ssp 报表
+router.get('/sreport/:pid/days/:days', function(req, res, next){
+    reportAction.sspFindByDays(req, res, function(data){
+        return res.send(data)
+    })
+})
 // 报表下载接口
 router.get('/reportdl/:aid/days/:days', function(req, res, next){
     reportAction.downloadByDays(req, res, function(data){
