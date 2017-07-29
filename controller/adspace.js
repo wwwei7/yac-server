@@ -14,6 +14,9 @@ var handler = {
   insert: function(req, res, next){
     var data = req.body;
 
+    //暂无待审核状态，默认有效
+    data.status = 1;
+
     Dao.insert(data, next)
   },
 
