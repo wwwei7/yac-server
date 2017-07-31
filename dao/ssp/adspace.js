@@ -39,8 +39,6 @@ adspace.getList = function(publisherID,next){
 
 
 adspace.insert = function(values, next){
-
-  values.status = 0;
   
   connection.query(
     'INSERT INTO adspace SET ?',

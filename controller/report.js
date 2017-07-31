@@ -12,6 +12,7 @@ var dealHourData = function(data, userRole){
     };
     switch(userRole){
       case 'agency':
+      case 'ssp':
         data.forEach(function(item){
           resObj.showArr[item.hour] = item.shows;
           resObj.clickArr[item.hour] = item.click;
@@ -196,8 +197,6 @@ var handler = {
     });
   },
 
-
-
   findMedia: function(req, res, next){
     var aid = req.params.aid,
         days = req.params.days.split('t');
@@ -259,17 +258,33 @@ var handler = {
   sspFindByDays: function(req, res, next){
     const pid = req.params.pid,
           days = req.params.days.split('t')
-          adsid = req.query.adsid;
+          userRole = req.session.user ? req.session.user.role : null;    
     const start = days[0],
           end = days[1];
-    var userRole = req.session.user ? req.session.user.role : null;
+    let adsid = req.query.adsid;
+    adsid = adsid =="0" ? null: adsid;
     if(!userRole){
       // return next({err: 'need login'})
-    }
+    } 
+
+    
     sspDao.findByDay(pid, adsid, start, end, function(data){
       next(dealDaysData(data, start, end, userRole));
     });
   },
+
+  sspFindByHour: function(req, res, next){
+    const pid = req.params.pid,
+          day = req.params.day,
+          userRole = req.session.user ? req.session.user.role : null;  
+          
+    let adsid = req.query.adsid;
+    adsid = adsid =="0" ? null: adsid;
+    
+    sspDao.findByHour(pid, adsid, day, function(data){
+        next(dealHourData(data, userRole));
+    })
+  }
 
 }
 
