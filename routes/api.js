@@ -112,16 +112,31 @@ router.post('/solution/pause/:id', function(req, res, next){
 })
 
 /* adspace */
+// 获取广告位列表
 router.get('/adspace/list/:publisherID', function(req, res, next){
     adsAction.getList(req, res, function(data){
         return res.send(data)
     })
 })
+// 新增广告位
 router.post('/adspace', function(req, res, next){
     adsAction.insert(req, res, function(data){
         return res.send(data)
     })
 })
+// 编辑广告位
+router.post('/adspace/:adsid', function(req, res, next){
+    adsAction.update(req, res, function(data){
+        return res.send(data)
+    })
+})
+// 获取广告位
+router.get('/adspace/:adsid', function(req, res, next){
+    adsAction.get(req, res, function(data){
+        return res.send(data)
+    })
+})
+// 检查广告位名称是否重复
 router.get('/adspace/:pid/name/:name', function(req, res, next){
     adsAction.findInName(req, res, function(data){
         return res.send(data)
@@ -257,21 +272,25 @@ router.post('/antiCheat/:aid', function(req, res, next){
 })
 
 /* ssp */
+// 获取媒体列表
 router.get('/publisherlist/:uid', function(req, res, next){
     publisherAction.findList(req, res, function(data){
         return res.send(data)
     })
 })
+// 新增媒体
 router.post('/publisher', function(req, res, next){
     publisherAction.insert(req, res, function(data){
         return res.send(data)
     })
 })
+// 检查媒体名称是否存在
 router.get('/publisher/:pid/name/:name', function(req, res, next){
     publisherAction.findInName(req, res, function(data){
         return res.send(data)
     })
 })
+
 
 /* util */
 router.get('/industry', function(req, res, next){

@@ -4,6 +4,11 @@ var Moment = require('moment');
 
 var handler = {
 
+  get: function(req, res, next){
+    const adsid = req.params.adsid;
+    Dao.findById(adsid, next);
+  },
+
   findInName: function(req, res, next){
     var pid = req.params.pid,
         name = req.params.name;
@@ -29,12 +34,10 @@ var handler = {
   },
 
   update: function(req, res, next){
-    var id = req.params.id,
+    var id = req.params.adsid,
         data = req.body;
-
-    data.id = id;
     
-    Dao.update(translate(data), next)
+    Dao.update(id, data, next)
   },
 
   pause: function(req, res, next){
