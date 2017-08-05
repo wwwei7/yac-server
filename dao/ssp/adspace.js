@@ -59,13 +59,13 @@ adspace.insert = function(values, next){
 } 
 
 
-adspace.update = function(values, next){
-  if(!values.id){
-    next("id doesn't exist");
+adspace.update = function(id, values, next){
+  if(!id){
+    next({err: "id doesn't exist"});
   }
   connection.query(
     'UPDATE adspace SET ? WHERE id = ?', 
-    [values, values.id],
+    [values, id],
     function(err, result){
       if(err) {
         next('insert failed')
@@ -74,8 +74,8 @@ adspace.update = function(values, next){
       }
       next({
           success: true,
-          sid: values.id,
-          sname: values.adspace_name
+          adsid: values.id,
+          name: values.name
       });
     });
 } 
