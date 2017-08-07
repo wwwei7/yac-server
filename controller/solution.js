@@ -112,7 +112,7 @@ var handler = {
 
     Dao.findListWithCost(aid, function(data){
       data.map(item => {
-        return item.cost = item.money + item.service || 0
+        return item.cost = parseFloat((item.money + item.service).toFixed(2)) || 0
       })
       next(data)
     })
