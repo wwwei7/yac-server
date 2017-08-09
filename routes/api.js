@@ -11,6 +11,7 @@ var reportAction = require('../controller/report');
 var trafficFilterAction = require('../controller/trafficFilter');
 var antiCheatAction = require('../controller/antiCheat');
 var adsAction = require('../controller/adspace');
+var urlInfoAction = require('../controller/urlInfo');
 // var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
 
@@ -220,6 +221,12 @@ router.get('/report/:aid/media/:days', function(req, res, next){
     })
 })
 
+// ssp 网页配置信息
+router.get('/urlinfo/:urlName', function(req, res, next){
+    urlInfoAction.sspFindByname(req, res, function(data){
+        return res.send(data)
+    })
+})
 //ssp 报表
 router.get('/sreport/:pid/days/:days', function(req, res, next){
     reportAction.sspFindByDays(req, res, function(data){
