@@ -4,8 +4,8 @@ var Moment = require('moment');
 
 
 
-Info.sspFindByname = function(urlName,next){
-    connection.query('SELECT * FROM url_info WHERE url_name="'+urlName+'"', 
+Info.sspFindByname = function(url,next){
+    connection.query('SELECT * FROM user_webpage WHERE url="'+url+'"', 
         function(err, rows, fields) {
             if (err) {
                 next(err);                

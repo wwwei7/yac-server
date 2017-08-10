@@ -222,7 +222,7 @@ router.get('/report/:aid/media/:days', function(req, res, next){
 })
 
 // ssp 网页配置信息
-router.get('/urlinfo/:urlName', function(req, res, next){
+router.get('/urlinfo/:url', function(req, res, next){
     urlInfoAction.sspFindByname(req, res, function(data){
         return res.send(data)
     })
