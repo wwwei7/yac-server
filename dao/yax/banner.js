@@ -2,7 +2,7 @@ var connection = require('../connection.js');
 var banner = {};
 
 banner.findList = function(next){
-    connection.query('SELECT * FROM banner_yax', 
+    connection.query('SELECT * FROM creativity', 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -14,7 +14,7 @@ banner.findList = function(next){
 }
 
 banner.findBybid = function(bid, next){
-    connection.query('SELECT * FROM banner_yax WHERE banner_id = '+ bid,
+    connection.query('SELECT * FROM creativity WHERE id = '+ bid,
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -26,7 +26,7 @@ banner.findBybid = function(bid, next){
 }
 
 banner.findByaid = function(aid, next){
-    connection.query('SELECT * FROM banner_yax WHERE advertiserid = '+ aid,
+    connection.query('SELECT * FROM creativity WHERE advertiserid = '+ aid,
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -38,12 +38,12 @@ banner.findByaid = function(aid, next){
 }
 
 banner.upStatus = function(values, next){
-    if(!values.banner_id){
-        next("banner_id doesn't exist");
+    if(!values.id){
+        next("id doesn't exist");
     }
     connection.query(
-        'UPDATE banner_yax SET ? WHERE banner_id = ?', 
-        [values, values.banner_id],
+        'UPDATE creativity SET ? WHERE id = ?', 
+        [values, values.id],
         function(err, result){
         if(err) {
             next('upStatus failed')
@@ -52,7 +52,7 @@ banner.upStatus = function(values, next){
         }
         next({
             success: true,
-            banner_id: values.banner_id,
+            id: values.id,
             status: values.status
         });
     });
