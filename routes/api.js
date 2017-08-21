@@ -18,6 +18,9 @@ var industryDao = require('../dao/industry');
 /* ssp Actions */
 var publisherAction = require('../controller/publisher')
 
+/* yax Actions */
+var yaxBannerAction = require('../controller/yax/banner');
+
 
 /* 静态资源 */
 router.get('/assets', function(req, res, next){
@@ -298,6 +301,29 @@ router.get('/publisher/:pid/name/:name', function(req, res, next){
     })
 })
 
+/* yax */
+//yax banner
+router.get('/yax/banner', function(req, res, next){
+    yaxBannerAction.findList(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/yax/banner/bid/:bid', function(req, res, next){
+    yaxBannerAction.findBybid(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/yax/banner/aid/:aid', function(req, res, next){
+    yaxBannerAction.findByaid(req, res, function(data){
+        return res.send(data)
+    })
+})
+
+router.post('/yax/banner/audit', function(req, res, next){
+    yaxBannerAction.upStatus(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* util */
 router.get('/industry', function(req, res, next){
