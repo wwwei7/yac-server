@@ -34,12 +34,8 @@ var handler = {
   },
 
   update: function(req, res, next){
-    var id = req.params.id,
-        data = req.body;
-
-    data.id = id;
-    
-    Dao.update(translate(data), next)
+    var data = req.body;
+    Dao.update(data, next)
   }
 }
 

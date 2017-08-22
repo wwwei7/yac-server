@@ -300,6 +300,18 @@ router.get('/publisher/:pid/name/:name', function(req, res, next){
         return res.send(data)
     })
 })
+//获取媒体信息
+router.get('/publisher/:id', function(req, res, next){
+    publisherAction.findById(req, res, function(data){
+        return res.send(data)
+    })
+})
+//更新媒体信息
+router.post('/publisher/up', function(req, res, next){
+    publisherAction.update(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* yax */
 //yax banner

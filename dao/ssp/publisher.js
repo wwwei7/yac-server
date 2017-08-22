@@ -55,6 +55,8 @@ publisher.insert = function(values, next){
     name: values.name,
     contacter: values.contacter,
     contact_number: values.contact_number,
+    contact_email: values.contact_email,
+    company: values.company,
     website: values.website,
     industry: values.industry,
     apppkg: values.apppkg,
@@ -80,20 +82,23 @@ publisher.insert = function(values, next){
   );
 }
 
-publisher.update = function(id, values, next){
-  if(!id){
+publisher.update = function(values, next){
+  if(!values.id){
     next("publisherid doesn't exist");
   }
   connection.query(
     'UPDATE publisher SET ? WHERE id = ?', 
-    [values, id],
+    [values, values.id],
     function(err, result){
       if(err) {
         next('insert failed')
         console.log(err.stack);
         throw err;
       }
-      next('success');
+      next({
+        success: true,
+        id: values.id
+      });
     });
 }  
 
