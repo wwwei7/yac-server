@@ -21,6 +21,7 @@ var dealHourData = function(data, userRole){
         });
         break;
       case 'advertiser':
+      case 'publisher':
         data.forEach(function(item){
           resObj.showArr[item.hour] = item.shows;
           resObj.clickArr[item.hour] = item.click;
@@ -87,15 +88,16 @@ var dealDaysData = function(data, start, end, userRole){
             day_data.sname = item.sname;            
           });
           break;
-        default:
+        case 'publisher':
           data.forEach(function(item){
             var day = Moment(item.date).format('YYYY-MM-DD');
             var day_data = resObj[day];
             day_data.show = item.shows;
             day_data.click = item.click;
-            day_data.money = parseFloat(item.money.toFixed(2));
-            day_data.service = parseFloat(item.service.toFixed(2));
-          });        
+            day_data.money = parseFloat((item.money + item.service).toFixed(2));
+            day_data.adspaceid = item.adspaceid;
+          });
+          break;
       }
 
       return resObj;
@@ -264,9 +266,8 @@ var handler = {
     let adsid = req.query.adsid;
     adsid = adsid =="0" ? null: adsid;
     if(!userRole){
-      // return next({err: 'need login'})
+      return next({err: 'need login'})
     } 
-
     
     sspDao.findByDay(pid, adsid, start, end, function(data){
       next(dealDaysData(data, start, end, userRole));

@@ -1,5 +1,6 @@
 var session = require('express-session');
 var User = require('../dao/user');
+var _ = require('lodash')
 var assets = require('../assets.config.js');
 
 module.exports.login = function(req, res, next){
@@ -24,17 +25,18 @@ module.exports.login = function(req, res, next){
     User.find(name,password,callback);
 }
 
+// 单页面登录action
 module.exports.loginSpa = function(req, res, next){
     var name = req.body.username;
     var password = req.body.password;
 
     var callback = function(user){
-        if(user && (user.role == 'ssp' || user.role == 'media')){
-            user.advertiserid = user.advertiser_id;            
+        if(user){
             req.session.user = user;
+            let resData = _.pick(user, ['id', 'name', 'role', 'publisherid', 'publisher_name']);
             next({
                 loginSuccess: 1,
-                user: user
+                user: resData
             })
         }else{
             next({
@@ -44,5 +46,5 @@ module.exports.loginSpa = function(req, res, next){
         }
     };
 
-    User.find(name,password,callback);
+    User.findExtra(name,password,callback,'publisher');
 }

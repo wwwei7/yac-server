@@ -27,4 +27,37 @@ user.find = function(name,psw,done){
     });
 }
 
+/**
+ * 查找user包含publisher或advertiser等子集对象
+ * @params type String; 
+ * type值决定子对象类型：
+ *  dsp系统: advertiser
+ *  ssp系统: publisher
+ * 
+ */
+user.findExtra = function(name, psw, done, type){
+    let subKeyInUser, subIdKey;
+    if(type == 'advertiser'){
+        subIdKey = subKeyInUser = type + '_id';
+    }else if(type == 'publisher'){
+        subKeyInUser = type + 'id';
+        subIdKey = 'id';
+    }
+    else{
+        return done({
+            err: 1,
+            errMsg: 'type empty'
+        })
+    }
+    const sql = `select u.*, sub.name as ${type}_name
+        from user_base as u
+        left join ${type} as sub on u.${subKeyInUser} = sub.${subIdKey}
+        WHERE u.name='${name}' AND u.psw='${psw}'`
+
+    connection.query(sql, function(err, rows, fields) {
+        if (err) throw err;
+        done(rows[0])
+    });
+}
+
 module.exports = user;
