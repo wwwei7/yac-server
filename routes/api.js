@@ -29,6 +29,7 @@ router.get('/assets', function(req, res, next){
     })
 })
 
+/* User */
 router.get('/user/:id', function(req, res, next) {
     var id = req.params.id;
     var sessionId = cookieParser.signedCookie(req.cookies.SESSIONID, 'yac secret hello');        
@@ -291,6 +292,12 @@ router.get('/publisherlist/:uid', function(req, res, next){
 // 新增媒体
 router.post('/publisher', function(req, res, next){
     publisherAction.insert(req, res, function(data){
+        return res.send(data)
+    })
+})
+// 检查媒体登录名称是否存在
+router.get('/publisher/username/:username', function(req, res, next){
+    publisherAction.findInLoginName(req, res, function(data){
         return res.send(data)
     })
 })

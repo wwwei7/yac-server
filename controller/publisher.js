@@ -1,4 +1,6 @@
 var Dao = require('../dao/ssp/publisher');
+var UserDao = require('../dao/user')
+var _ = require('lodash')
 var Moment = require('moment');
 
 
@@ -18,6 +20,13 @@ var handler = {
     })
   },
 
+  findInLoginName: function(req, res, next){
+    var username = req.params.username;
+    UserDao.nameExist(username, function(data){
+      next(data)
+    })
+  },
+
   findInName: function(req, res, next){
     var pid = req.params.pid; 
     var name = req.params.name;
@@ -29,7 +38,6 @@ var handler = {
   
   insert: function(req, res, next){
     var data = req.body;
-
     Dao.insert(data, next)
   },
 

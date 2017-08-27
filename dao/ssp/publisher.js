@@ -1,5 +1,6 @@
 var connection = require('../connection.js');
 var md5 = require('md5')
+var _ = require('lodash')
 var publisher = {};
 
 publisher.findById = function(id, next){
@@ -63,23 +64,55 @@ publisher.insert = function(values, next){
     appKey: appKey
   }
 
-  connection.query(
-    'INSERT INTO publisher SET ?',
-    insertObj,
-    function(err, result){
-      if(err) {
-          next({
-              err: 1,
-              errMsg: '创建失败'
-          })
-          console.log(err.stack);
-          throw err;
-      }
-      next({
-          ok: 1
+  var loginData = _.pick(values ,['username','password'])
+  if(loginData.username && loginData.password){
+    connection.beginTransaction(function(err) {
+        if (err) { throw err; }
+        connection.query('INSERT INTO publisher SET ?', insertObj, function(err, result) {
+          if (err) { 
+            connection.rollback(function() {
+              throw err;
+            });
+          }
+      
+          connection.query('INSERT INTO user_base (name, psw, role, publisherid) values (?,?,?,?)', [loginData.username, loginData.password, "publisher", result.insertId+""], function(err, result) {
+            if (err) { 
+              connection.rollback(function() {
+                throw err;
+              });
+            }  
+            connection.commit(function(err) {
+              if (err) { 
+                connection.rollback(function() {
+                  throw err;
+                });
+              }
+              next({
+                ok: 1
+              });
+            });
+          });
+        });
       });
-    }
-  );
+      
+  }else
+    connection.query(
+        'INSERT INTO publisher SET ?',
+        insertObj,
+        function(err, result){
+            if(err) {
+                next({
+                    err: 1,
+                    errMsg: '创建失败'
+                })
+                console.log(err.stack);
+                throw err;
+            }
+            next({
+                ok: 1
+            });
+        }
+    );
 }
 
 publisher.update = function(values, next){
