@@ -1,5 +1,6 @@
 var session = require('express-session');
 var User = require('../dao/user');
+var UserYax = require('../dao/yax/user');
 var _ = require('lodash')
 var assets = require('../assets.config.js');
 
@@ -25,7 +26,7 @@ module.exports.login = function(req, res, next){
     User.find(name,password,callback);
 }
 
-// 单页面登录action
+// ssp登录action
 module.exports.loginSpa = function(req, res, next){
     var name = req.body.username;
     var password = req.body.password;
@@ -48,3 +49,28 @@ module.exports.loginSpa = function(req, res, next){
 
     User.findExtra(name,password,callback,'publisher');
 }
+
+// yax登录action
+module.exports.loginYax = function(req, res, next){
+    var name = req.body.username;
+    var password = req.body.password;
+
+    var callback = function(user){
+        if(user){
+            req.session.user = user;
+            let resData = _.pick(user, ['id', 'name', 'company', 'role']);
+            next({
+                loginSuccess: 1,
+                user: resData
+            })
+        }else{
+            next({
+                loginSuccess: 0,
+                err: '用户名或密码错误'
+            })      
+        }
+    };
+
+    UserYax.find(name,password,callback);
+}
+
