@@ -2,7 +2,7 @@ var connection = require('../connection.js');
 var banner = {};
 
 banner.findList = function(next){
-    connection.query('SELECT * FROM creativity', 
+    connection.query('SELECT * FROM banner_yax', 
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -14,7 +14,7 @@ banner.findList = function(next){
 }
 
 banner.findBybid = function(bid, next){
-    connection.query('SELECT * FROM creativity WHERE id = '+ bid,
+    connection.query('SELECT * FROM banner_yax WHERE id = '+ bid,
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -26,7 +26,7 @@ banner.findBybid = function(bid, next){
 }
 
 banner.findByaid = function(aid, next){
-    connection.query('SELECT * FROM creativity WHERE advertiserid = '+ aid,
+    connection.query('SELECT * FROM banner_yax WHERE advertiserid = '+ aid,
         function(err, rows, fields) {
             if (err) {
                 next(err);                
@@ -42,7 +42,7 @@ banner.upStatus = function(values, next){
         next("id doesn't exist");
     }
     connection.query(
-        'UPDATE creativity SET ? WHERE id = ?', 
+        'UPDATE banner_yax SET ? WHERE id = ?', 
         [values, values.id],
         function(err, result){
         if(err) {
