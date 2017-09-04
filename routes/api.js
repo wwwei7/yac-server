@@ -20,6 +20,7 @@ var publisherAction = require('../controller/publisher')
 
 /* yax Actions */
 var yaxBannerAction = require('../controller/yax/banner');
+var yaxInjectAction = require('../controller/yax/injectSetting')
 
 
 /* 静态资源 */
@@ -337,12 +338,22 @@ router.get('/yax/banner/aid/:aid', function(req, res, next){
         return res.send(data)
     })
 })
-
 router.post('/yax/banner/audit', function(req, res, next){
     yaxBannerAction.upStatus(req, res, function(data){
         return res.send(data)
     })
 })
+//yax dsp setting
+router.get('/yax/injects/:id', function(req, res, next){
+    yaxInjectAction.findById(req, res, function(data){
+        return res.send(data)
+    })
+}) 
+router.post('/yax/injects', function(req, res, next){
+    yaxInjectAction.update(req, res, function(data){
+        return res.send(data)
+    })
+}) 
 
 /* util */
 router.get('/industry', function(req, res, next){
