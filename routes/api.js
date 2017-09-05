@@ -343,6 +343,24 @@ router.post('/yax/banner/audit', function(req, res, next){
         return res.send(data)
     })
 })
+// 获取dspid下的素材列表
+router.get('/yax/banner/dspid/:dspid', function(req, res, next){
+    yaxBannerAction.findByDspid(req, res, function(data){
+        return res.send(data)
+    })
+})
+// 根据dspid搜索广告主id
+router.get('/yax/banner/dspid/:dspid/aid/:aid', function(req, res, next){
+    yaxBannerAction.findByDspidForaid(req, res, function(data){
+        return res.send(data)
+    })
+})
+//根据dspid搜索创意id
+router.get('/yax/banner/dspid/:dspid/bid/:bid', function(req, res, next){
+    yaxBannerAction.findByDspidForbid(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* util */
 router.get('/industry', function(req, res, next){
