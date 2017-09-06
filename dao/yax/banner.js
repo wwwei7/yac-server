@@ -37,6 +37,42 @@ banner.findByaid = function(aid, next){
     );
 }
 
+banner.findByDspid = function(dspid, next){
+    connection.query('SELECT * FROM banner_yax WHERE dspid = '+ dspid,
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows);
+        }
+    );
+}
+
+banner.findByDspidForaid = function(dspid, aid, next){
+    connection.query('SELECT * FROM banner_yax WHERE dspid='+ dspid +' AND advertiserid=' + aid,
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows);
+        }
+    );
+}
+
+banner.findByDspidForbid = function(dspid, bid, next){
+    connection.query('SELECT * FROM banner_yax WHERE dspid='+ dspid +' AND id=' + bid,
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows);
+        }
+    );
+}
+
 banner.upStatus = function(values, next){
     if(!values.id){
         next("id doesn't exist");

@@ -14,6 +14,20 @@ var handler = {
   upStatus: function(req, res, next){
     var data = req.body;
     Dao.upStatus(data, next);
+  },
+  findByDspid: function(req, res, next){
+    var dspid = req.params.dspid;
+    Dao.findByDspid(dspid, next);
+  },
+  findByDspidForaid: function(req, res, next){
+    var dspid = req.params.dspid;
+    var aid = req.params.aid;
+    Dao.findByDspidForaid(dspid, aid, next);
+  },
+  findByDspidForbid: function(req, res, next){
+    var dspid = req.params.dspid;
+    var bid = req.params.bid;
+    Dao.findByDspidForbid(dspid, bid, next);
   }
 }
 
