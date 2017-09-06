@@ -21,6 +21,7 @@ var publisherAction = require('../controller/publisher')
 /* yax Actions */
 var yaxBannerAction = require('../controller/yax/banner');
 var yaxInjectAction = require('../controller/yax/injectSetting')
+var yaxReportAction = require('../controller/yax/report')
 
 
 /* 静态资源 */
@@ -354,6 +355,17 @@ router.post('/yax/injects', function(req, res, next){
         return res.send(data)
     })
 }) 
+//yax report
+router.get('/yax/report/summary/:dspid', function(req,res,next){
+    yaxReportAction.findSummary(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/yax/report/:dspid/days/:days', function(req,res,next){
+    yaxReportAction.findByDay(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* util */
 router.get('/industry', function(req, res, next){
