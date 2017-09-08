@@ -108,7 +108,7 @@ exports.findByDay = function(req, res, next){
     //   return next({err: 'need login'})
     // } 
     
-    Dao.findByDay(69, start, end, function(data){
+    Dao.findByDay(dspid, start, end, function(data){
       next(dealDaysData(data, start, end));
     });
   }
