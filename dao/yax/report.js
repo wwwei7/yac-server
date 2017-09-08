@@ -3,7 +3,7 @@ var connection = require('../connection.js');
 var co = require('co')
 
 exports.findSummary = function(dspid, next){
-  dspid =69
+  // dspid =69
   //历史总花费
   const sql_last_all = `SELECT sum(money)+ sum(service_charge) as money FROM log_hour_yax WHERE dspid=${dspid}`;
   //上月花费
