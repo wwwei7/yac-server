@@ -61,6 +61,7 @@ publisher.insert = function(values, next){
     website: values.website,
     industry: values.industry,
     apppkg: values.apppkg,
+    publish_type: values.publish_type,
     appKey: appKey
   }
 
