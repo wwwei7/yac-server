@@ -40,7 +40,7 @@ var dealDaysData = function(data, start, end){
 
       all_show += day_data.show;
       all_click += day_data.click; 
-      all_money += day_data.money; 
+      all_money += (item.money + item.service); 
       
     });
 
