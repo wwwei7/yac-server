@@ -324,18 +324,13 @@ router.post('/publisher/up', function(req, res, next){
 
 /* yax */
 //yax banner
+router.get('/yax/banner/dspid', function(req, res, next){
+    yaxBannerAction.findByDspid(req, res, function(data){
+        return res.send(data)
+    })
+})
 router.get('/yax/banner', function(req, res, next){
     yaxBannerAction.findList(req, res, function(data){
-        return res.send(data)
-    })
-})
-router.get('/yax/banner/bid/:bid', function(req, res, next){
-    yaxBannerAction.findBybid(req, res, function(data){
-        return res.send(data)
-    })
-})
-router.get('/yax/banner/aid/:aid', function(req, res, next){
-    yaxBannerAction.findByaid(req, res, function(data){
         return res.send(data)
     })
 })
@@ -344,24 +339,7 @@ router.post('/yax/banner/audit', function(req, res, next){
         return res.send(data)
     })
 })
-// 获取dspid下的素材列表
-router.get('/yax/banner/dspid/:dspid', function(req, res, next){
-    yaxBannerAction.findByDspid(req, res, function(data){
-        return res.send(data)
-    })
-})
-// 根据dspid搜索广告主id
-router.get('/yax/banner/dspid/:dspid/aid/:aid', function(req, res, next){
-    yaxBannerAction.findByDspidForaid(req, res, function(data){
-        return res.send(data)
-    })
-})
-//根据dspid搜索创意id
-router.get('/yax/banner/dspid/:dspid/bid/:bid', function(req, res, next){
-    yaxBannerAction.findByDspidForbid(req, res, function(data){
-        return res.send(data)
-    })
-})
+
 //yax dsp setting
 router.get('/yax/injects/:id', function(req, res, next){
     yaxInjectAction.findById(req, res, function(data){
