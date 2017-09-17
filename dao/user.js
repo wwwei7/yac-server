@@ -33,6 +33,34 @@ user.nameExist = function(name, done){
         done(rows[0])
     });
 }
+user.findAccount = function(data, done){
+    let sql = `SELECT * FROM user_base WHERE publisherid = ${data.id}`
+    if(data.psw){
+        sql += ` AND psw = '${data.psw}'`
+    }
+    connection.query(sql, function(err, rows, fields) {
+        if (err) throw err;
+        done(rows[0])
+    });
+}
+user.updateAccount = function(data, next){
+    let sql = `UPDATE user_base SET psw='${data.psw}' WHERE publisherid = ${data.id} AND psw='${data.oldpsw}'`
+    connection.query(sql, function(err, result){
+        if(err) {
+            next({
+                success: false,
+                msg: err
+            })
+            console.log(err.stack);
+            throw err;
+        }
+        next({
+            success: true,
+            msg: 'update success'
+        });
+          
+    });
+}
 
 /**
  * 查找user包含publisher或advertiser等子集对象

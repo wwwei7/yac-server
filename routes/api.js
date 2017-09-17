@@ -321,6 +321,18 @@ router.post('/publisher/up', function(req, res, next){
         return res.send(data)
     })
 })
+//获取登录名称及检验密码
+router.get('/publisher/account/findname', function(req, res, next){
+    publisherAction.findAccount(req, res, function(data){
+        return res.send(data)
+    })
+})
+//更新密码
+router.post('/publisher/account/updatepws', function(req, res, next){
+    publisherAction.updateAccount(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* yax */
 //yax banner

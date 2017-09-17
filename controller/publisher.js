@@ -3,6 +3,13 @@ var UserDao = require('../dao/user')
 var _ = require('lodash')
 var Moment = require('moment');
 
+var filterName=function(data){
+  var newData = { name: null}
+  if(data && data.name){
+    newData.name = data.name
+  }
+  return newData
+}
 
 var handler = {
   findById: function(req, res, next){
@@ -44,7 +51,48 @@ var handler = {
   update: function(req, res, next){
     var data = req.body;
     Dao.update(data, next)
+  },
+
+  findAccount: function(req, res, next){
+    var reqData = req.query;
+    if(!reqData.id){
+      next({name: null}) 
+      return
+    }
+    UserDao.findAccount(reqData, function(data){
+      next(filterName(data))
+    })
+  },
+
+  updateAccount: function(req, res, next){
+    var reqData = req.body;
+    if(!reqData.id){
+      next({
+        success: false,
+        msg: 'Missing parameter id'
+      })
+      return
+    }
+    if(!reqData.psw){
+      next({
+        success: false,
+        msg: 'Missing parameter psw'
+      })
+      return
+    }
+    if(!reqData.oldpsw){
+      next({
+        success: false,
+        msg: 'Missing parameter oldpsw'
+      })
+      return
+    }
+    UserDao.updateAccount(reqData, function(data){
+      next((data))
+    })
+
   }
+
 }
 
 module.exports = handler;
