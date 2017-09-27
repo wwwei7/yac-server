@@ -12,6 +12,7 @@ var setSearch = function(sql,data){
             sql += ` AND b.${i} = ${data[i]}`
         } 
     }
+    sql += ` ORDER BY id DESC`
     return sql
 }
 var setUpdata = function(data){
@@ -25,7 +26,7 @@ var setUpdata = function(data){
 }
 
 banner.findList = function(data, next){
-    var sql = `SELECT b.id, b.dspid, b.advertiserid, b.adtype, b.category, b.banner_url, b.banner_link, b.banner_title, b.banner_desc, b.status, b.audit_info, b.operatetime, b.banner_video, b.banner_duration, i.ic_name AS category_type
+    var sql = `SELECT b.id, b.dspid, b.advertiserid, b.adtype, b.category, b.banner_url, b.banner_link, b.banner_title, b.banner_desc, b.status, b.audit_info, b.operatetime, b.banner_video, b.banner_duration, b.createtime, i.ic_name AS category_type
        FROM banner_yax b LEFT JOIN industry_category i ON b.category = i.ic_id`
     sql = setSearch(sql,data)
     connection.query(sql,
