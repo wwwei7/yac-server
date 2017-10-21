@@ -1,4 +1,4 @@
-const Sequelize = require('Sequelize')
+const Sequelize = require('sequelize')
 const seqConn = require('../sequelizeConn')
 
 const UserYax = seqConn.define('user_yax', {

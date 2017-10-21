@@ -1,4 +1,4 @@
-const Sequelize = require('Sequelize')
+const Sequelize = require('sequelize')
 const seqConn = require('../sequelizeConn')
 
 const inject = seqConn.define('dsp_inject_yax', {
