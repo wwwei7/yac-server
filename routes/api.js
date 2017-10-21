@@ -325,7 +325,9 @@ router.post('/publisher/up', function(req, res, next){
 //获取登录名称及检验密码
 router.get('/publisher/account/findname', function(req, res, next){
     publisherAction.findAccount(req, res, function(data){
-
+        return res.send(data)
+    })
+})
 /* yax */
 // 检查yax登录名称是否存在
 router.get('/yax/username/:username', function(req, res, next){
