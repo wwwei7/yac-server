@@ -1,6 +1,7 @@
 var session = require('express-session');
 var User = require('../dao/user');
 var UserYax = require('../dao/yax/user');
+var Crypto = require('../util/crypto');
 var _ = require('lodash')
 var assets = require('../assets.config.js');
 
@@ -54,6 +55,11 @@ module.exports.loginSpa = function(req, res, next){
 module.exports.loginYax = function(req, res, next){
     var name = req.body.username;
     var password = req.body.password;
+
+    //password对称解密
+    password = Crypto.decodeAES(password)
+    //password哈希加密
+    password = Crypto.sha256(password);
 
     var callback = function(user){
         if(user){

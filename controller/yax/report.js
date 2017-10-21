@@ -47,9 +47,9 @@ var dealDaysData = function(data, start, end){
     resObj.all.all_show = all_show;
     resObj.all.all_click = all_click;
     resObj.all.all_money = all_money.toFixed(2);
-    resObj.all.cpr = ((all_click/all_show)*100).toFixed(2); //点击率
-    resObj.all.cpc = (all_money/all_click).toFixed(2) //平均点击花费
-    resObj.all.cpm = ((all_money/all_show)*1000*100).toFixed(2) //千次展示花费
+    resObj.all.cpr = all_show == 0 ? 0 : ((all_click/all_show)*100).toFixed(2); //点击率
+    resObj.all.cpc = all_click == 0 ? 0 : (all_money/all_click).toFixed(2);//平均点击花费
+    resObj.all.cpm = all_show == 0 ? 0 : ((all_money/all_show)*1000*100).toFixed(2); //千次展示花费
 
     return resObj;
 }

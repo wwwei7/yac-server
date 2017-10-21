@@ -12,6 +12,7 @@ var trafficFilterAction = require('../controller/trafficFilter');
 var antiCheatAction = require('../controller/antiCheat');
 var adsAction = require('../controller/adspace');
 var urlInfoAction = require('../controller/urlInfo');
+var yaxUserAction = require('../controller/yax/user')
 // var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
 
@@ -324,6 +325,17 @@ router.post('/publisher/up', function(req, res, next){
 //获取登录名称及检验密码
 router.get('/publisher/account/findname', function(req, res, next){
     publisherAction.findAccount(req, res, function(data){
+
+/* yax */
+// 检查yax登录名称是否存在
+router.get('/yax/username/:username', function(req, res, next){
+    yaxUserAction.findNameExist(req, res, function(data){
+        return res.send(data)
+    })
+})
+//yax banner
+router.get('/yax/banner', function(req, res, next){
+    yaxBannerAction.findList(req, res, function(data){
         return res.send(data)
     })
 })
