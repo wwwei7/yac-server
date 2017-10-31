@@ -2,7 +2,7 @@ var Dao = require('../dao/ssp/publisher');
 var UserDao = require('../dao/user')
 var _ = require('lodash')
 var Moment = require('moment');
-
+var CryptoUtil = require('.././util/crypto');
 var filterName=function(data){
   var newData = { name: null}
   if(data && data.name){
@@ -45,6 +45,12 @@ var handler = {
   
   insert: function(req, res, next){
     var data = req.body;
+
+    //password对称解密
+    data.password = CryptoUtil.decodeAES(data.password);
+    //password哈希加密
+    data.password = CryptoUtil.sha256(data.password);
+    
     Dao.insert(data, next)
   },
 
