@@ -30,7 +30,11 @@ var handler = {
   findInLoginName: function(req, res, next){
     var username = req.params.username;
     UserDao.nameExist(username, function(data){
-      next(data)
+      if(data){
+        next({name: data.name})
+      }else{
+        next()
+      }
     })
   },
 
