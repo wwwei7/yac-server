@@ -89,3 +89,36 @@ module.exports.loginYax = function(req, res, next){
     UserYax.find(name,password,callback);
 }
 
+// yax登录action
+module.exports.loginAdmin = function(req, res, next){
+    var name = req.body.username;
+    var password = req.body.password;
+
+    //password对称解密
+    password = Crypto.decodeAES(password)
+    //password哈希加密
+    password = Crypto.sha256(password);
+
+    var callback = function(user){
+        if(user){
+            user = _.pick(user, ['id', 'name', 'company', 'role']);
+            req.session.user = user;
+            next({
+                loginSuccess: 1,
+                user: user
+            })
+        }else{
+            next({
+                loginSuccess: 0,
+                err: '用户名或密码错误'
+            })      
+        }
+    };
+
+    User.find_({
+        name,
+        psw: password, 
+        role: 'admin'
+    }, callback);
+}
+

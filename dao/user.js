@@ -1,4 +1,6 @@
 var connection = require('./connection.js');
+const seqConn = require('./sequelizeConn')
+const userModel = require('./model/userBase')
 
 connection.connect(function(err){
     if(err) throw err
@@ -17,6 +19,21 @@ connection.connect(function(err){
 });
 
 var user = {};
+
+user.find_ = function(queryObj, done){
+    return userModel.findOne({
+        where: queryObj
+    }).then(user => {
+        if(user && user.dataValues){
+            done(user.dataValues)
+        }else{
+            done(null)
+        }
+    }).catch(err => {
+        console.log(err)
+        done()
+    })
+}
 
 user.find = function(name,psw,done){
     const sql = `SELECT * FROM user_base WHERE name='${name}' AND psw='${psw}'`

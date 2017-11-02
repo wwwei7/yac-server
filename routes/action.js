@@ -22,6 +22,11 @@ router.post('/loginyax', function(req, res, next) {
         return res.send(data)
     });
 });
+router.post('/loginadmin', function(req, res, next) {
+    loginAction.loginAdmin(req,res,function(data){
+        return res.send(data)
+    });
+});
 router.get('/logout', function(req, res, next){
     doLogout(req,res)
 })

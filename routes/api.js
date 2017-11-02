@@ -13,11 +13,13 @@ var antiCheatAction = require('../controller/antiCheat');
 var adsAction = require('../controller/adspace');
 var urlInfoAction = require('../controller/urlInfo');
 var yaxUserAction = require('../controller/yax/user')
-// var agencyAction = require('../controller/agency');
+var agencyAction = require('../controller/agency');
 var industryDao = require('../dao/industry');
 
 /* ssp Actions */
+var sspUserAction = require('../controller/ssp/user')
 var publisherAction = require('../controller/publisher')
+
 
 /* yax Actions */
 var yaxBannerAction = require('../controller/yax/banner');
@@ -52,6 +54,11 @@ router.post('/advertiser', function(req, res, next){
 router.get('/advertiser/:id', function(req, res, next){
     var id = req.params.id;
     advertiser.findById(id,function(data){
+        return res.send(data)
+    })
+})
+router.get('/advertiser', function(req, res, next){
+    advertiser.findList(function(data){
         return res.send(data)
     })
 })
@@ -150,17 +157,17 @@ router.get('/adspace/:pid/name/:name', function(req, res, next){
         return res.send(data)
     })
 })
-/* admin */
-// router.get('/agency',function(req, res, next){
-//     agencyAction.getList(req, res, function(data){
-//         return res.send(data)
-//     })
-// })
-// router.get('/agency/:agid',function(req, res, next){
-//     agencyAction.get(req, res, function(data){
-//         return res.send(data)
-//     })
-// })
+/* agency */
+router.get('/agency',function(req, res, next){
+    agencyAction.getList(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/agency/:agid',function(req, res, next){
+    agencyAction.get(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 /* banner */
 router.post('/banner/', function(req, res, next){
@@ -228,6 +235,13 @@ router.get('/report/:aid/media/:days', function(req, res, next){
     })
 })
 
+// ssp user
+router.get('/ssplist', function(req, res, next){
+    sspUserAction.getList(req, res, function(data){
+        return res.send(data)
+    })
+})
+
 // ssp 网页配置信息
 router.get('/urlinfo/:url', function(req, res, next){
     urlInfoAction.sspFindByname(req, res, function(data){
@@ -286,7 +300,13 @@ router.post('/antiCheat/:aid', function(req, res, next){
 })
 
 /* ssp */
-// 获取媒体列表
+// 获取所有媒体列表
+router.get('/publisherlist', function(req, res, next){
+    publisherAction.findListAll(req, res, function(data){
+        return res.send(data)
+    })
+})
+// 获取ssp下媒体列表
 router.get('/publisherlist/:uid', function(req, res, next){
     publisherAction.findList(req, res, function(data){
         return res.send(data)

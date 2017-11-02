@@ -30,6 +30,18 @@ publisher.findList = function(uid,next){
     );
 }
 
+publisher.findListAll = function(next){
+    connection.query('SELECT * FROM publisher', 
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows);
+        }
+    );
+}
+
 publisher.findNameByPublisher = function(uid, name , next){
     var i, row, adlist = [];
     connection.query('SELECT * FROM publisher WHERE ssp_id='+uid+' AND name="'+name+'"', 

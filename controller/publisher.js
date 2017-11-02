@@ -27,6 +27,15 @@ var handler = {
     })
   },
 
+  findListAll: function(req, res, next){
+    Dao.findListAll(function(data){
+      data = data.map(item=>{
+        return _.omit(item, 'appkey')
+      })
+      next(data)
+    })
+  },
+
   findInLoginName: function(req, res, next){
     var username = req.params.username;
     UserDao.nameExist(username, function(data){

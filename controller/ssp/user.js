@@ -4,6 +4,12 @@ var CryptoUtil = require('../../util/crypto');
 
 var handler = {
 
+  getList: function(req, res, next){
+    Dao.getList(function(data){
+      next(data)
+    })
+  },
+
   register: function(req, res, next){
     var data = req.body;
 

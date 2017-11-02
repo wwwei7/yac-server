@@ -1,6 +1,19 @@
 var connection = require('./connection.js');
 var advertiser = {};
 
+
+advertiser.findList = function(next){
+    connection.query('SELECT * FROM advertiser', 
+        function(err, rows, fields) {
+            if (err) {
+                next(err);                
+                throw err;
+            }
+            next(rows);
+        }
+    );
+}
+
 advertiser.findById = function(id, next){
     if(!id){
         return next({});
