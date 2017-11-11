@@ -8,6 +8,7 @@ var bannerAction = require('../controller/banner');
 var solutionAction = require('../controller/solution');
 var chargeAction = require('../controller/charge');
 var reportAction = require('../controller/report');
+var reportAdminAction = require('../controller/reportAdmin');
 var trafficFilterAction = require('../controller/trafficFilter');
 var antiCheatAction = require('../controller/antiCheat');
 var adsAction = require('../controller/adspace');
@@ -234,6 +235,19 @@ router.get('/report/:aid/media/:days', function(req, res, next){
         return res.send(data);
     })
 })
+
+/* admin report */
+router.get('/areport/ssp/:days', function(req, res, next){
+    reportAdminAction.getSSP(req, res, function(data){
+        return res.send(data)
+    })
+})
+router.get('/areport/bid/:days', function(req, res, next){
+    reportAdminAction.getBid(req, res, function(data){
+        return res.send(data)
+    })
+})
+
 
 // ssp user
 router.get('/ssplist', function(req, res, next){
