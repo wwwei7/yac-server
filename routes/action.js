@@ -8,6 +8,7 @@ var doLogout = require('../controller/logout')
 var doUpload = require('../controller/bannerUpload')
 var presetCity = require('../controller/presetCity')
 var sspUserAction = require('../controller/ssp/user')
+var adminUserAction = require('../controller/admin/user')
 
 router.post('/login', function(req, res, next) {
     loginAction.login(req,res);
@@ -62,6 +63,18 @@ router.post('/yax/pswreset', function(req, res, next) {
         return res.send(data)
     });
 });
+
+router.post('/admin/register', function(req, res, next) {
+    adminUserAction.register(req,res,function(data){
+        return res.send(data)
+    });
+});
+router.post('/admin/pswreset', function(req, res, next) {
+    adminUserAction.pswReset(req,res,function(data){
+        return res.send(data)
+    });
+});
+
 
 router.get('/check', function(req, res, next){
     doCheck(req,res)
