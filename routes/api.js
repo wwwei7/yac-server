@@ -247,6 +247,11 @@ router.get('/areport/bid/:days', function(req, res, next){
         return res.send(data)
     })
 })
+router.get('/areport/hour/:day', function(req, res, next){
+    reportAdminAction.getMain(req, res, function(data){
+        return res.send(data)
+    })
+})
 
 
 // ssp user

@@ -39,4 +39,20 @@ report.findByBid = function(start, end, next){
   );
 }
 
+report.findYaxByHour = function(day, next){
+  var sql = `select sum(shows) as \`show\`, sum(click) as click, sum(money) as money, sum(service_charge) as service, sum(profit_money) as profit, \`hour\` 
+            from log_hour_yax where date='${day}' group by hour`;
+
+  connection.query(sql, 
+    function(err, rows, fields) {
+      if (err) {
+          next(err);                
+          throw err;
+      }
+      next(rows);
+    }
+  );
+  
+}
+
 module.exports = report;

@@ -1,7 +1,37 @@
 var Dao = require('../dao/reportAdmin');
 var Moment = require('moment');
 var _ = require('lodash')
+var co = require('co')
 require('moment-range');
+
+var dealHourData = function(data){
+  var show = [], click = [], money = [], cpc = [], cpm = [], ctr = [],
+      dayItem = {} , moneyItem = 0 ,i = 0;
+  for(;i<23;i++){
+    dayItem = data[i];
+    //当前小时吻合
+    if(dayItem && dayItem.hour == i){
+      show.push(dayItem.show);
+      click.push(dayItem.click);
+      moneyItem = parseFloat(parseFloat((dayItem.money || 0) + (dayItem.service || 0) + (dayItem.profit || 0)).toFixed(2));
+      money.push(moneyItem);
+      cpc.push(dayItem.click ? parseFloat((moneyItem/dayItem.click).toFixed(2)) : 0);
+      cpm.push(dayItem.show ? parseFloat((moneyItem*1000/dayItem.show).toFixed(2)) : 0)
+      ctr.push(dayItem.click && dayItem.show ? parseFloat((dayItem.click/dayItem.show).toFixed(3)) : 0 )
+    }else{
+      //当前小时数不吻合，留空
+      show.push(0);
+      click.push(0);
+      money.push(0);
+      cpc.push(0)
+      cpm.push(0)
+      ctr.push(0)
+    }
+  }
+  return {
+    show, click, money, cpc, cpm, ctr
+  }
+}
 
 
 var dealDaysData = function(data, start, end, userRole){
@@ -63,6 +93,42 @@ var handler = {
     Dao.findByBid(start, end, function(data){
       next(dealDaysData(data, start, end));
     });
+  },
+
+
+  getMain: function (req, res, next){
+    co(function* (){
+      var today = req.params.day;
+      var yesterday = Moment(today).subtract(1, 'days').format('YYYY-MM-DD');
+      var lastmonth = Moment(today).subtract(1, 'months').format('YYYY-MM-DD');
+      //以小时分隔
+      var todayData = yield new Promise(function(resolve, reject){
+        Dao.findYaxByHour(today, function(data){
+          resolve(data)
+        })
+      })
+      var yesterdayData = yield new Promise(function(resolve, reject){
+        Dao.findYaxByHour(yesterday, function(data){
+          resolve(data)
+        })
+      })
+      var lastmonthData = yield new Promise(function(resolve, reject){
+        Dao.findYaxByHour(lastmonth, function(data){
+          resolve(data)
+        })
+      })
+      next({
+        today: dealHourData(todayData),
+        yesterday: dealHourData(yesterdayData),
+        lastmonth: dealHourData(lastmonthData),
+        lastmonthDay: lastmonth
+      })
+    }).catch(function(err){
+      next({
+        err: 1,
+        errMsg: 'search failed'
+      })
+    })
   }
 
 }
