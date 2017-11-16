@@ -11,7 +11,8 @@ module.exports.login = function(req, res, next){
     var password = req.body.password;
     var domain = req.headers.host.split(':')[0];
     var assetsData = assets[domain];
-
+    //password哈希加密
+    password = Crypto.sha256(password);
     var callback = function(user){
         if(user){
             user.advertiserid = user.advertiser_id;

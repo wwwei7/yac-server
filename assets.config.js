@@ -6,6 +6,13 @@ module.exports = {
     dname: '优效广告有限公司',
     icp: '粤ICP备16037727号-1'
   },
+  'dsp.youradcloud.com': {
+    logo: 'http://mt.youradcloud.com/web/logo-1.png',
+    logo_title: '欢迎登录优效广告平台',
+    title: '优效DSP广告平台 Your AD Cloud',
+    dname: '优效广告有限公司',
+    icp: '粤ICP备16037727号-1'
+  },
   'dsp.ipangchina.com': {
     logo: 'http://mt.youradcloud.com/web/act/348f7e6ca49f1a18/logo-.png',
     logo_title: '欢迎登录小胖看房广告平台',
