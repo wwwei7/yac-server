@@ -7,7 +7,7 @@ require('moment-range');
 var dealHourData = function(data){
   var show = [], click = [], money = [], cpc = [], cpm = [], ctr = [],
       dayItem = {} , moneyItem = 0 ,i = 0;
-  for(;i<23;i++){
+  for(;i<24;i++){
     dayItem = data[i];
     //当前小时吻合
     if(dayItem && dayItem.hour == i){
@@ -35,7 +35,7 @@ var dealHourData = function(data){
 
 
 var dealDaysData = function(data, start, end, userRole){
-      if(data.error){
+      if(data.error || !data){
         return next(data);
       }
 
@@ -100,7 +100,8 @@ var handler = {
     co(function* (){
       var today = req.params.day;
       var yesterday = Moment(today).subtract(1, 'days').format('YYYY-MM-DD');
-      var lastmonth = Moment(today).subtract(1, 'months').format('YYYY-MM-DD');
+      var lastweek = Moment(today).subtract(7, 'days').format('YYYY-MM-DD');
+      
       //以小时分隔
       var todayData = yield new Promise(function(resolve, reject){
         Dao.findYaxByHour(today, function(data){
@@ -112,16 +113,16 @@ var handler = {
           resolve(data)
         })
       })
-      var lastmonthData = yield new Promise(function(resolve, reject){
-        Dao.findYaxByHour(lastmonth, function(data){
+      var lastweekData = yield new Promise(function(resolve, reject){
+        Dao.findYaxByHour(lastweek, function(data){
           resolve(data)
         })
       })
       next({
         today: dealHourData(todayData),
         yesterday: dealHourData(yesterdayData),
-        lastmonth: dealHourData(lastmonthData),
-        lastmonthDay: lastmonth
+        lastweek: dealHourData(lastweekData),
+        lastweekDay: lastweek
       })
     }).catch(function(err){
       next({
